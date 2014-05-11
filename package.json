@@ -1,0 +1,52 @@
+{
+  "name": "ShareCopter",
+  "description": "The best project ever.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/BU-ECS/ShareCopter",
+  "author": {
+    "name": "ECS",
+    "email": "BRN_ECS@zuehlke.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BU-ECS/ShareCopter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BU-ECS/ShareCopter/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/BU-ECS/ShareCopter/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "lib/ShareCopter",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt nodeunit",
+    "start": "cd simulator && beefy world.js 8888 -- -d -r ar-drone-browserified:ar-drone"
+  },
+  "dependencies": {
+      "ar-drone-browserified": "~0.0.5",
+      "voxel-camera": "~0.1.1",
+      "tic": "~0.2.1",
+      "ar-drone": "~0.2.1",
+      "voxel-drone": "https://github.com/shama/voxel-drone/tarball/master"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.6.4",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt": "~0.4.3",
+    "voxel-engine": "~0.17.1",
+    "voxel-perlin-terrain": "0.0.5",
+    "voxel-forest": "0.0.0",
+    "voxel-debris": "0.0.4",
+    "voxel-player": "~0.1.0",
+    "logo-drone": "0.0.2",
+    "beefy": "~0.4.1"
+  },
+  "keywords": []
+}
