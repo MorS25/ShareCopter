@@ -3,7 +3,12 @@
 The best project ever.
 
 ## Getting Started
-Install the module with: `npm install https://github.com/BU-ECS/ShareCopter/tarball/master`
+Install the module with:
+```
+npm install https://github.com/BU-ECS/ShareCopter/tarball/master
+cd node_modules/ShareCopter
+npm install
+```
 
 ```javascript
 var ShareCopter = require('ShareCopter');
