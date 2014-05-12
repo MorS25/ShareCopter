@@ -46,7 +46,8 @@
     "voxel-debris": "0.0.4",
     "voxel-player": "~0.1.0",
     "logo-drone": "0.0.2",
-    "beefy": "~0.4.1"
+    "beefy": "~0.4.1",
+    "browserify": "~4.1.2"
   },
   "keywords": []
 }
