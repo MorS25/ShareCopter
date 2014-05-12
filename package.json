@@ -34,7 +34,8 @@
       "tic": "~0.2.1",
       "ar-drone": "~0.2.1",
       "voxel-drone": "https://github.com/shama/voxel-drone/tarball/master",
-      "express": "4.2.0"
+      "express": "4.2.0",
+      "requirejs": "2.1.11"
   },
   "devDependencies": {
     "grunt-contrib-jshint": "~0.6.4",
