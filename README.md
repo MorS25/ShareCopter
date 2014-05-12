@@ -16,9 +16,9 @@ ShareCopter.awesome(); // "awesome"
 ```
 
 ## Documentation
-Package 'beefy' needs to be installed globally:
+Package 'beefy' and 'browserify' need to be installed globally:
 ```
-npm install -g beefy
+npm install -g beefy browserify
 ```
 
 ## Examples

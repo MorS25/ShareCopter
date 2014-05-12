@@ -27,7 +27,7 @@
   "scripts": {
     "test": "grunt nodeunit",
     "start": "cd simulator && beefy world.js 8888 -- -d -r ar-drone-browserified:ar-drone"
-  },
+},
   "dependencies": {
       "ar-drone-browserified": "~0.0.5",
       "voxel-camera": "~0.1.1",
