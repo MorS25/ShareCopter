@@ -11,3 +11,10 @@ client
     this.stop();
     this.land();
   });
+
+module.exports = {
+    takeoff: function () {
+        console.log("Received takeoff function call!");
+        client.takeoff();
+    }
+};
