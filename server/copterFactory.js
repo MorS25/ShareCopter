@@ -1,20 +1,24 @@
 // Copter Factory
-var CopterFactory = {
-    getCopterInstance : function(type) {}
+
+var CopterFactoryInterface = {
+    getCopterInstance: function (type) {
+    }
 };
 
-var ConcreteCopterFactory = function() {};
+var ConcreteCopterFactory = function () {
+};
 
-var CopterImplementation = require('../copterImplementation').Copter;
-var CopterTestImplementation = require('../copterTestImplementation').Copter;
+var CopterImplementation = require('../server/copterImplementation').Copter;
+var CopterTestImplementation = require('../test/copterTestImplementation').Copter;
 
-ConcreteCopterFactory.prototype = Object.create(CopterFactory);
+ConcreteCopterFactory.prototype = Object.create(CopterFactoryInterface);
 
-ConcreteCopterFactory.prototype.getCopterInstance = function(type) {
+ConcreteCopterFactory.prototype.getCopterInstance = function (type) {
     if (type === "copter") {
+        console.log("Creating copter client...")
         return new CopterImplementation();
     }
     return new CopterTestImplementation();
 };
 
-module.exports = CopterFactory;
+module.exports = ConcreteCopterFactory;
