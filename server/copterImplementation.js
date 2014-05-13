@@ -4,11 +4,50 @@ var CopterApplication = CopterApplication || {};
 CopterApplication.NodeCopter = function(){
     console.log("Creating new client...");
 
-    var copterInterface = require('../server/copterInterface');
-    var arDrone = require('ar-drone');
+    var copterInterface = require('../server/copterInterface')
+        , autonomy = require('ardrone-autonomy')
+        ;
 
-    this.client = arDrone.createClient();
+    this.mission = autonomy.createMission();
+    this.client = this.mission.client();
     this.prototype = Object.create(copterInterface);
+
+/*    function navdata_option_mask(c) {
+        return 1 << c;
+    }*/
+
+// From the SDK.
+/*    var navdata_options = (
+        navdata_option_mask(arDroneConstants.options.DEMO)
+        | navdata_option_mask(arDroneConstants.options.VISION_DETECT)
+        | navdata_option_mask(arDroneConstants.options.MAGNETO)
+        | navdata_option_mask(arDroneConstants.options.WIFI)
+        );*/
+
+// Land on ctrl-c
+/*    var exiting = false;
+    var theMission = this.mission;
+    process.on('SIGINT', function() {
+        if (exiting) {
+            process.exit(0);
+        } else {
+            console.log('Got SIGINT. Landing, press Control-C again to force exit.');
+            exiting = true;
+            theMission.control().disable();
+            theMission.client().land(function() {
+                process.exit(0);
+            });
+        }
+    });*/
+
+// Connect and configure the drone
+/*    this.mission.client().config('general:navdata_demo', true);
+    this.mission.client().config('general:navdata_options', navdata_options);
+    this.mission.client().config('video:video_channel', 1);
+    this.mission.client().config('detect:detect_type', 12);*/
+
+// Log mission for debugging purposes
+    //this.mission.log("mission-" + dateFormat(new Date(), "yyyy-mm-dd_hh-MM-ss") + ".txt");
 
     console.log("New copter instantiated!");
 };
@@ -22,6 +61,62 @@ CopterApplication.NodeCopter.prototype = {
         console.log("land");
         this.client.land();
     },
+    up: function(speed, duration){
+        console.log("up " + speed + ", duration " + duration);
+        this.client.up(speed);
+        var client = this.client;
+        setTimeout(function(){client.stop();}, duration);
+    },
+    down: function(speed, duration){
+        console.log("down " + speed + ", duration " + duration);
+        this.client.down(speed);
+        var client = this.client;
+        setTimeout(function(){client.stop();}, duration);
+    },
+    front: function(speed, duration){
+        console.log("front " + speed + ", duration " + duration);
+        this.client
+            .after(100, function() {
+                this.front(speed);
+            })
+            .after(duration, function() {
+                this.stop();
+            });
+    },
+    back: function(speed, duration){
+        console.log("back " + speed + ", duration " + duration);
+        this.client
+            .after(100, function() {
+                this.back(speed);
+            })
+            .after(duration, function() {
+                this.stop();
+            });
+    },
+    left: function(speed, duration){
+        console.log("left " + speed + ", duration " + duration);
+        this.client
+            .after(100, function() {
+                this.left(speed);
+            })
+            .after(duration, function() {
+                this.stop();
+            });
+    },
+    right: function(speed, duration){
+        console.log("right " + speed + ", duration " + duration);
+        this.client
+            .after(100, function() {
+                this.right(speed);
+            })
+            .after(duration, function() {
+                this.stop();
+            });
+    },
+    stop: function(){
+        console.log("stop");
+        this.client.stop();
+    },
     turnAround : function(direction, speed){
         console.log("turnAround " + direction + ", " + speed);
         if(direction === 'left'){
@@ -30,57 +125,57 @@ CopterApplication.NodeCopter.prototype = {
             this.client.clockwise(speed);
         }
     },
-    up: function(speed, duration){
-        console.log("up " + speed + ", duration " + duration);
+    crane : function() {
+        console.log(new Date().toLocaleTimeString() + " : crane move");
+        this.client.takeoff();
         this.client
-            .after(100, function() { this.up(speed) })
-            .after(duration, function() {
-                this.stop();
+            .after(5000, function() {
+
+                console.log(new Date().toLocaleTimeString() + " : up");
+                this.up(0.1);
+            })
+            .after(2000, function() {
+
+                console.log(new Date().toLocaleTimeString() + " : down");
+                this.down(0.1);
+            })
+            .after(2000, function() {
+
+                console.log(new Date().toLocaleTimeString() + " : land");
+                this.land();
             });
     },
-    down: function(speed, duration){
-        console.log("down " + speed + ", duration " + duration);
-        this.client
-            .after(100, function() { this.down(speed) })
-            .after(duration, function() {
-                    this.stop();
+    square : function() {
+
+        var df = require('dateformat');
+        console.log(df(new Date(), "hh-MM-ss") + " : Configuring square move...");
+
+        this.mission.takeoff()
+            .zero()
+            .hover(1000)
+            .altitude(1.2)
+            .hover(1000)
+            .left(0.5)
+            .right(1.0)
+            .go({x:0, y:0})
+            .hover(1000)
+            .land();
+
+        var theMission = this.mission;
+
+        theMission.run(function (err, result) {
+            if (err) {
+                console.trace("Oops, something bad happened: %s", err.message);
+                console.log("Oops!");
+                theMission.client().stop();
+                theMission.client().land();
+            } else {
+                console.log("We are done!");
+//                process.exit(0);
+            }
         });
-    },
-    front: function(speed, duration){
-        console.log("front " + speed + ", duration " + duration);
-        this.client
-            .after(100, function() { this.front(speed) })
-            .after(duration, function() {
-                this.stop();
-            });
-    },
-    back: function(speed, duration){
-        console.log("back " + speed + ", duration " + duration);
-        this.client
-            .after(100, function() { this.back(speed) })
-            .after(duration, function() {
-                this.stop();
-            });
-    },
-    left: function(speed, duration){
-        console.log("left " + speed + ", duration " + duration);
-        this.client
-            .after(100, function() { this.left(speed) })
-            .after(duration, function() {
-                this.stop();
-            });
-    },
-    right: function(speed, duration){
-        console.log("right " + speed + ", duration " + duration);
-        this.client
-            .after(100, function() { this.right(speed) })
-            .after(duration, function() {
-                this.stop();
-            });
-    },
-    stop: function(){
-        console.log("stop");
-        this.client.stop();
+
+        console.log(df(new Date(), "hh-MM-ss") + " : Running mission...");
     },
 
     /* animation:

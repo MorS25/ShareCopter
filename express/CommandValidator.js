@@ -37,7 +37,8 @@ CopterApplication.CommandValidator.prototype = {
     validateDuration: function (req, res) {
         var duration = req.params.duration;
         if (isNaN(duration) || duration <= 0) {
-            duration = 1000;
+            res.statusCode = 400;
+            return res.send("Error 400: duration should be bigger than 0");
         }
         return duration;
     },

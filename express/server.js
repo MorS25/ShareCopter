@@ -111,6 +111,16 @@ app.get('/back/speed/:speed/duration/:duration', function(req, res){
 
 
 // Special Moves
+app.get('/crane', function(req, res){
+    res.send('OK');
+    copterInstance.crane();
+});
+
+app.get('/square', function(req, res){
+    res.send('OK');
+    copterInstance.square();
+});
+
 app.get('/turnaround/direction/:direction/speed/:speed', function(req, res){
     var direction = validator.validateDirection(req, res);
     var speed = validator.validateSpeed(req, res);

@@ -48,6 +48,12 @@ CopterApplication.NodeCopter.prototype = {
     stop: function(){
         console.log("stop");
     },
+    crane: function(){
+        console.log("crane");
+    },
+    square: function(){
+        console.log("square");
+    },
     animate: function(animation, duration) {
         console.log("animate " + animation + ", " + duration + " ms");
     }

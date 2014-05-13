@@ -15,6 +15,8 @@ module.exports = {
     left: function(speed, duration){},
     right: function(speed, duration){},
     stop: function(){},
+    crane: function(){},
+    square: function(){},
 
     /* animation:
          ['phiM30Deg', 'phi30Deg', 'thetaM30Deg', 'theta30Deg', 'theta20degYaw200deg',
