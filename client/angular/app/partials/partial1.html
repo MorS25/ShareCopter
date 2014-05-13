@@ -1,8 +1,8 @@
-<div ng-controller="ButtonsCtrl">
+<div ng-controller="MyCtrl1">
     <div class="btn-group">
-        <label class="btn btn-success" ng-model="radioModel" btn-radio="'Take off'" uncheckable>Take off</label>
-        <label class="btn btn-danger" ng-model="radioModel" btn-radio="'Stop'" uncheckable>Stop</label>
-        <label class="btn btn-success" ng-model="radioModel" btn-radio="'Land'" uncheckable>Land</label>
+        <label class="btn btn-success" ng-model="radioModel" ng-click="takeOff()"  uncheckable>Take off</label>
+        <label class="btn btn-danger" ng-model="radioModel" ng-click="stop()" uncheckable>Stop</label>
+        <label class="btn btn-success" ng-model="radioModel" ng-click="land()" uncheckable>Land</label>
     </div>
     <pre>{{radioModel || 'null'}}</pre>
 </div>

@@ -2,8 +2,19 @@
 
 /* Services */
 
+var droneServices = angular.module('myApp.services', []);
 
-// Demonstrate how to register services
-// In this case it is a simple value service.
-angular.module('myApp.services', []).
-  value('version', '0.1');
+droneServices.service('DroneService',  ['$http', function ($http) {
+    this.takeOff = function()
+    {
+        $http.get('http://localhost:3000/takeoff')
+            .success(function(data){
+                console.log('successful take off');
+                return "success suisse!";
+    })
+            .error(function(data){
+                console.log('failed take off');
+                return "failed take off :(";
+            });
+    };
+}]);
