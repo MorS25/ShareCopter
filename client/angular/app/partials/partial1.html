@@ -1,3 +1,8 @@
-<button type="button" class="btn btn-primary" ng-model="singleModel" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
-    Single Toggle
-</button>
+<div ng-controller="ButtonsCtrl">
+    <div class="btn-group">
+        <label class="btn btn-success" ng-model="radioModel" btn-radio="'Take off'" uncheckable>Take off</label>
+        <label class="btn btn-danger" ng-model="radioModel" btn-radio="'Stop'" uncheckable>Stop</label>
+        <label class="btn btn-success" ng-model="radioModel" btn-radio="'Land'" uncheckable>Land</label>
+    </div>
+    <pre>{{radioModel || 'null'}}</pre>
+</div>
