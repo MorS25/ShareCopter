@@ -1,8 +1,24 @@
 <div ng-controller="MyCtrl1">
+    <div >
+        <!-- Z Axis Control Panel -->
+    </div>
+    <div>
+        <!-- Video Panel -->
+    </div>
     <div class="btn-group">
         <label class="btn btn-success" ng-model="radioModel" ng-click="takeOff()"  uncheckable>Take off</label>
         <label class="btn btn-danger" ng-model="radioModel" ng-click="stop()" uncheckable>Stop</label>
         <label class="btn btn-success" ng-model="radioModel" ng-click="land()" uncheckable>Land</label>
     </div>
-    <pre>{{radioModel || 'null'}}</pre>
+    <div>
+        <!-- X/Y Axis Control Panel -->
+    </div>
+    <div>
+        <!-- Protocol Panel -->
+        <ul id="protocol-listing">
+            <li ng-repeat="protocolEntry in commandProtocol">
+                <pre>{{protocolEntry.entry || 'null'}}</pre>
+            </li>
+         </ul>
+    </div>
 </div>

@@ -2,12 +2,14 @@
 
 /* Services */
 
+var baseAdress = "http://localhost:3000/";
+
 var droneServices = angular.module('myApp.services', []);
 
 droneServices.service('DroneService',  ['$http', function ($http) {
     this.takeOff = function()
     {
-        $http.get('http://localhost:3000/takeoff')
+        $http.get(baseAdress + 'takeoff')
             .success(function(data){
                 console.log('successful take off');
                 return "success suisse!";
