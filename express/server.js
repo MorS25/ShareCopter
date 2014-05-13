@@ -1,11 +1,22 @@
 var express = require('express');
 var app = express();
-var shareCopter = require('../server/copterFactory');
+var CopterFactory = require('../server/copterFactory');
 
-var CopterInstance = shareCopter.getCopterInstance("test");
+var concreteFactory = new CopterFactory();
+var copterInstance = concreteFactory.getCopterInstance("copter");
 
 app.get('/takeoff', function(req, res){
-    CopterInstance.takeoff();
+    copterInstance.takeOff();
+    res.send('OK');
+})
+
+app.get('/land', function(req, res){
+    copterInstance.land();
+    res.send('OK');
+})
+
+app.get('/turnaround', function(req, res){
+    copterInstance.turnAround('left', 1);
     res.send('OK');
 })
 
