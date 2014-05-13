@@ -1,3 +1,6 @@
-/**
- * Created by cfu on 13.05.2014.
- */
+// Copter Interface
+var copterInterface = {
+    takeOff : function(){},
+    land: function(){},
+    turnAround: function(direction, speed){}
+};
