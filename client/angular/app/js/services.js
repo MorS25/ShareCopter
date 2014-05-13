@@ -2,48 +2,86 @@
 
 /* Services */
 
-var baseAddress = "http://localhost:3000/";
-
 var droneServices = angular.module('myApp.services', []);
 
 droneServices.service('DroneService', ['$http', function ($http) {
-    this.takeOff = function (successCallBack, errorCallBack) {
+    var baseAddress = "http://localhost:3000/";
+    var localSuccessCallBack = function(){};
+    var localErrorCallBack = function() {};
+
+    this.takeOff = function () {
         $http.get(baseAddress + 'takeoff')
             .success(function () {
-                successCallBack('Took off');
+                localSuccessCallBack('Took off');
             })
             .error(function (data) {
-                errorCallBack('failed take off');
+                localErrorCallBack('failed take off');
             });
     };
 
-    this.stop = function (successCallBack, errorCallBack) {
+    this.land = function () {
+        $http.get(baseAddress + 'land')
+            .success(function () {
+                localSuccessCallBack('Landed');
+            })
+            .error(function (data) {
+                localErrorCallBack('failed to  land');
+            });
+    };
+
+    this.stop = function () {
         $http.get(baseAddress + 'stop')
             .success(function () {
-                successCallBack('Stopped');
+                localSuccessCallBack('Stopped');
             })
             .error(function (data) {
-                errorCallBack('Failed to stop (boom)');
+                localErrorCallBack('Failed to stop (boom)');
             });
     };
 
-    this.up = function (successCallBack, errorCallBack, speed) {
+    this.up = function (speed) {
         $http.get(baseAddress + 'up/speed/' + speed)
             .success(function () {
-                successCallBack('Got up with ' + speed);
+                this.localSuccessCallBack('Gone up with ' + speed);
             })
             .error(function (data) {
-                errorCallBack('Failed to go up');
+                this.localErrorCallBack('Failed to go up');
             });
     };
 
-    this.down = function (successCallBack, errorCallBack, speed) {
+    this.down = function (speed) {
         $http.get(baseAddress + 'down/speed/' + speed)
             .success(function () {
-                successCallBack('Got down with ' + speed);
+                localSuccessCallBack('Gone down with ' + speed);
             })
             .error(function (data) {
-                errorCallBack('Failed to go down');
+                localErrorCallBack('Failed to go down');
             });
     };
+
+    this.left = function (speed) {
+        $http.get(baseAddress + 'left/speed/' + speed)
+            .success(function () {
+                localSuccessCallBack('Gone left down with ' + speed);
+            })
+            .error(function (data) {
+                localErrorCallBack('Failed to go left');
+            });
+    };
+
+    this.right = function (speed) {
+        $http.get(baseAddress + 'right/speed/' + speed)
+            .success(function () {
+                localSuccessCallBack('Gone right down with ' + speed);
+            })
+            .error(function (data) {
+                localErrorCallBack('Failed to go right');
+            });
+    };
+
+    /*this.initializeCallbacks = function (successCallBack, errorCallBack) {
+        localSuccessCallBack = successCallBack;
+        localErrorCallBack = errorCallBack;
+    };*/
+
 }]);

@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var CopterFactory = require('../server/copterFactory');
 var concreteFactory = new CopterFactory();
-var copterInstance = concreteFactory.getCopterInstance("test");
+var copterInstance = concreteFactory.getCopterInstance("copter");
 
 var Validator = require('../express/CommandValidator').CommandValidator;
 var validator = new Validator();
