@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var CopterFactory = require('../server/copterFactory');
 var concreteFactory = new CopterFactory();
-var copterInstance = concreteFactory.getCopterInstance("test");
+var copterInstance = concreteFactory.getCopterInstance("copter");
 
 var Validator = require('../express/CommandValidator').CommandValidator;
 var validator = new Validator();
@@ -28,37 +28,79 @@ app.get('/stop', function(req, res){
 // Standard Moves
 app.get('/up/speed/:speed', function(req, res){
     var speed = validator.validateSpeed(req, res);
-    copterInstance.up(speed);
+    copterInstance.up(speed, 1000);
+    res.send('OK');
+});
+
+app.get('/up/speed/:speed/duration/:duration', function(req, res){
+    var speed = validator.validateSpeed(req, res);
+    var duration = validator.validateDuration(req, res);
+    copterInstance.up(speed, duration);
     res.send('OK');
 });
 
 app.get('/down/speed/:speed', function(req, res){
     var speed = validator.validateSpeed(req, res);
-    copterInstance.down(speed);
+    copterInstance.down(speed, 1000);
+    res.send('OK');
+});
+
+app.get('/down/speed/:speed/duration/:duration', function(req, res){
+    var speed = validator.validateSpeed(req, res);
+    var duration = validator.validateDuration(req, res);
+    copterInstance.down(speed, duration);
     res.send('OK');
 });
 
 app.get('/left/speed/:speed', function(req, res){
     var speed = validator.validateSpeed(req, res);
-    copterInstance.left(speed);
+    copterInstance.left(speed, 1000);
+    res.send('OK');
+});
+
+app.get('/left/speed/:speed/duration/:duration', function(req, res){
+    var speed = validator.validateSpeed(req, res);
+    var duration = validator.validateDuration(req, res);
+    copterInstance.left(speed, duration);
     res.send('OK');
 });
 
 app.get('/right/speed/:speed', function(req, res){
     var speed = validator.validateSpeed(req, res);
-    copterInstance.right(speed);
+    copterInstance.right(speed, 1000);
+    res.send('OK');
+});
+
+app.get('/right/speed/:speed/duration/:duration', function(req, res){
+    var speed = validator.validateSpeed(req, res);
+    var duration = validator.validateDuration(req, res);
+    copterInstance.right(speed, duration);
     res.send('OK');
 });
 
 app.get('/front/speed/:speed', function(req, res){
     var speed = validator.validateSpeed(req, res);
-    copterInstance.front(speed);
+    copterInstance.front(speed, 1000);
+    res.send('OK');
+});
+
+app.get('/front/speed/:speed/duration/:duration', function(req, res){
+    var speed = validator.validateSpeed(req, res);
+    var duration = validator.validateDuration(req, res);
+    copterInstance.front(speed, duration);
     res.send('OK');
 });
 
 app.get('/back/speed/:speed', function(req, res){
     var speed = validator.validateSpeed(req, res);
-    copterInstance.back(speed);
+    copterInstance.back(speed, 1000);
+    res.send('OK');
+});
+
+app.get('/back/speed/:speed/duration/:duration', function(req, res){
+    var speed = validator.validateSpeed(req, res);
+    var duration = validator.validateDuration(req, res);
+    copterInstance.back(speed, duration);
     res.send('OK');
 });
 

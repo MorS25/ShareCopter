@@ -30,29 +30,53 @@ CopterApplication.NodeCopter.prototype = {
             this.client.clockwise(speed);
         }
     },
-    up: function(speed){
-        console.log("up " + speed);
-        this.client.up(speed);
+    up: function(speed, duration){
+        console.log("up " + speed + ", duration " + duration);
+        this.client
+            .after(100, function() { this.up(speed) })
+            .after(duration, function() {
+                this.stop();
+            });
     },
-    down: function(speed){
-        console.log("down " + speed);
-        this.client.down(speed);
+    down: function(speed, duration){
+        console.log("down " + speed + ", duration " + duration);
+        this.client
+            .after(100, function() { this.down(speed) })
+            .after(duration, function() {
+                    this.stop();
+        });
     },
-    front: function(speed){
-        console.log("front " + speed);
-        this.client.front(speed);
+    front: function(speed, duration){
+        console.log("front " + speed + ", duration " + duration);
+        this.client
+            .after(100, function() { this.front(speed) })
+            .after(duration, function() {
+                this.stop();
+            });
     },
-    back: function(speed){
-        console.log("back " + speed);
-        this.client.back(speed);
+    back: function(speed, duration){
+        console.log("back " + speed + ", duration " + duration);
+        this.client
+            .after(100, function() { this.back(speed) })
+            .after(duration, function() {
+                this.stop();
+            });
     },
-    left: function(speed){
-        console.log("left " + speed);
-        this.client.left(speed);
+    left: function(speed, duration){
+        console.log("left " + speed + ", duration " + duration);
+        this.client
+            .after(100, function() { this.left(speed) })
+            .after(duration, function() {
+                this.stop();
+            });
     },
-    right: function(speed){
-        console.log("right " + speed);
-        this.client.right(speed);
+    right: function(speed, duration){
+        console.log("right " + speed + ", duration " + duration);
+        this.client
+            .after(100, function() { this.right(speed) })
+            .after(duration, function() {
+                this.stop();
+            });
     },
     stop: function(){
         console.log("stop");

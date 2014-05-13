@@ -8,12 +8,12 @@ module.exports = {
         speed: [0..1]
      */
     turnAround: function(direction, speed){},
-    up: function(speed){},
-    down: function(speed){},
-    front: function(speed){},
-    back: function(speed){},
-    left: function(speed){},
-    right: function(speed){},
+    up: function(speed, duration){},
+    down: function(speed, duration){},
+    front: function(speed, duration){},
+    back: function(speed, duration){},
+    left: function(speed, duration){},
+    right: function(speed, duration){},
     stop: function(){},
 
     /* animation:
