@@ -1,5 +1,11 @@
 // Copter Interface
-var copterInterface = {
+/*var copterInterface = {
+    takeOff : function(){},
+    land: function(){},
+    turnAround: function(direction, speed){}
+};*/
+
+module.exports = {
     takeOff : function(){},
     land: function(){},
     turnAround: function(direction, speed){}

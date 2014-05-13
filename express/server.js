@@ -1,13 +1,11 @@
 var express = require('express');
 var app = express();
-var shareCopter = require('../SampleScripts/simpleTakeoff');
+var shareCopter = require('../server/copterFactory');
 
-app.get('/hello', function(req, res){
-    res.send('Hello World');
-});
+var CopterInstance = shareCopter.getCopterInstance("test");
 
 app.get('/takeoff', function(req, res){
-    shareCopter.takeoff();
+    CopterInstance.takeoff();
     res.send('OK');
 })
 

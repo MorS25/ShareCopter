@@ -1,4 +1,4 @@
-
+// Copter Implementation
 var copterImplementation = function(){
 
     console.log("Creating new client...");
@@ -11,16 +11,22 @@ var copterImplementation = function(){
     copterImplementation.prototype = Object.create(copterInterface);
 
     copterImplementation.prototype.takeOff = function(){
-        //actual add item code
+        client.takeoff();
     };
 
     copterImplementation.prototype.land = function(){
-        //actual add item code
+        client.land();
     };
 
     copterImplementation.prototype.turnAround = function(direction, speed){
-        //actual add item code
+        if(direction === 'left'){
+            client.counterClockwise(speed);
+        } else{
+            client.clockwise(speed);
+        }
     };
 
     console.log("New copter instantiated!");
-}
+};
+
+module.exports.Copter = copterImplementation;
