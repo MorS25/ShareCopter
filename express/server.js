@@ -7,6 +7,8 @@ var copterInstance = concreteFactory.getCopterInstance("test");
 var Validator = require('../express/CommandValidator').CommandValidator;
 var validator = new Validator();
 
+
+// Initiation
 app.get('/takeoff', function(req, res){
     copterInstance.takeOff();
     res.send('OK');
@@ -17,13 +19,13 @@ app.get('/land', function(req, res){
     res.send('OK');
 });
 
-app.get('/turnaround/direction/:direction/speed/:speed', function(req, res){
-    var direction = validator.validateDirection(req, res);
-    var speed = validator.validateSpeed(req, res);
-    copterInstance.turnAround(direction, speed);
+app.get('/stop', function(req, res){
+    copterInstance.stop();
     res.send('OK');
 });
 
+
+// Standard Moves
 app.get('/up/speed/:speed', function(req, res){
     var speed = validator.validateSpeed(req, res);
     copterInstance.up(speed);
@@ -60,6 +62,15 @@ app.get('/back/speed/:speed', function(req, res){
     res.send('OK');
 });
 
+
+// Special Moves
+app.get('/turnaround/direction/:direction/speed/:speed', function(req, res){
+    var direction = validator.validateDirection(req, res);
+    var speed = validator.validateSpeed(req, res);
+    copterInstance.turnAround(direction, speed);
+    res.send('OK');
+});
+
 app.get('/animate/:animation/duration/:duration', function(req, res){
     var animation = validator.validateAnimation(req, res);
     var duration = validator.validateDuration(req, res);
@@ -67,11 +78,8 @@ app.get('/animate/:animation/duration/:duration', function(req, res){
     res.send('OK');
 });
 
-app.get('/stop', function(req, res){
-    copterInstance.stop();
-    res.send('OK');
-});
 
+// Callback
 var server = app.listen(3000, function() {
     console.log('Listening on port %d', server.address().port);
 });
