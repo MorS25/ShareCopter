@@ -1,6 +1,8 @@
 'use strict';
 
-var copter = require('copterTestImplementation');
+var CopterFactory = require('../server/copterFactory');
+var copterFactory = new CopterFactory();
+var copterInstance = copterFactory.getCopterInstance("test");
 
 /*
   ======== A Handy Little Nodeunit Reference ========
@@ -28,9 +30,22 @@ exports['copter'] = {
   },
   'land': function(test) {
     test.expect(1);
-    // tests here
-    copter.land()
-    test.equal(copter.landCalled, true);
+    copterInstance.land();
+    test.equal(copterInstance.landCalled, true);
     test.done();
-  }
+  },
+  'takeOff': function(test) {
+      test.expect(1);
+      copterInstance.takeOff();
+      test.equal(copterInstance.takeOffCalled, true);
+      test.done();
+  },
+  'turnAround': function(test) {
+      test.expect(2);
+      copterInstance.turnAround('right', 0.5);
+      var calledParams = copterInstance.turnAroundCalledWith;
+      test.equal(calledParams.direction, 'right');
+      test.equal(calledParams.speed, 0.5);
+      test.done();
+    }
 };
