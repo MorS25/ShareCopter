@@ -29,6 +29,23 @@
   padding: 0;
 }
 
+#control-panel {
+    padding: 10px;
+}
+
+.slider-control {
+    width: 300px !important;
+}
+
 #protocol-listing {
     width: 500px;
+}
+
+input[type=range].vertical
+{
+    writing-mode: bt-lr; /* IE */
+    -webkit-appearance: slider-vertical; /* WebKit */
+    width: 8px;
+    height: 300px;
+    padding: 0 5px;
 }

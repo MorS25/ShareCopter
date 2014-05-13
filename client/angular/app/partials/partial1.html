@@ -1,6 +1,9 @@
-<div ng-controller="MyCtrl1">
-    <div >
+<div ng-controller="MyCtrl1" id="control-panel">
+    <div>
         <!-- Z Axis Control Panel -->
+        <input type="range" min="0" max="100"
+            ng-model="verticalSpeed" ng-change="verticalChange()"
+            class="vertical"/>
     </div>
     <div>
         <!-- Video Panel -->
