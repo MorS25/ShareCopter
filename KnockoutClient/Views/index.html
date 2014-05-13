@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Deine Kamerafahrten</title>
+    <link href="../css/bootstrap.css" rel="stylesheet">
+</head>
+<body>
+
+
+<h2>Deine Kamerafahrten (<span data-bind="text: trackingShots().length"></span>)</h2>
+
+<table>
+    <thead><tr>
+        <th>Kamerafahrt</th>
+        <th>Abstand zum Objekt (m)</th>
+        <th></th>
+    </tr></thead>
+
+    <tbody data-bind="foreach: trackingShots">
+    <tr>
+        <td><label>
+            <select data-bind="options: $root.availableTrackingShots,value:name,optionsText:'name'"></select>
+        </label></td>
+        <td><label>
+            <input data-bind="value: distance"/>
+        </label></td>
+        <td><a href="#" data-bind="click: $root.removeTrackingShot">Entfernen</a></td>
+    </tr>
+    </tbody>
+</table>
+<br>
+
+<button data-bind="click: addTrackingShot, visible: trackingShots().length < 5">Kamerafahrt hinzufügen</button>
+
+
+<button data-bind="click: sendToServer, visible: trackingShots().length > 0 ">Kamerafahrten ausführen</button>
+
+<script type="text/javascript" src="../scripts/knockout-3.1.0.js"></script>
+<script type="text/javascript" src="../ViewModel/CameraViewModel.js"></script>
+
+</body>
+</html>
