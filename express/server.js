@@ -7,6 +7,12 @@ var copterInstance = concreteFactory.getCopterInstance("test");
 var Validator = require('../express/CommandValidator').CommandValidator;
 var validator = new Validator();
 
+app.all('/*', function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Content-Type,X-Requested-With');
+    next();
+});
+
 app.get('/takeoff', function(req, res){
     copterInstance.takeOff();
     res.send('OK');
