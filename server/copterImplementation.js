@@ -189,6 +189,8 @@ CopterApplication.NodeCopter.prototype = {
         }
 
         this.mission
+            .hover(500)
+            .go({x:0, y:0})
             .altitude(1.8)
             .hover(1000)
             .altitude(0.2)
@@ -208,6 +210,8 @@ CopterApplication.NodeCopter.prototype = {
         }
 
         this.mission
+            .hover(500)
+            .go({x:0, y:0})
             .altitude(1.0)
             .hover(1000)
             .forward(0.5)
