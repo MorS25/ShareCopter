@@ -4,11 +4,123 @@ var CopterApplication = CopterApplication || {};
 CopterApplication.NodeCopter = function(){
     console.log("Creating new client...");
 
-    var copterInterface = require('../server/copterInterface');
-    var arDrone = require('ar-drone');
+    var copterInterface = require('../server/copterInterface')
+        , ardrone = require('ar-drone')
+        , autonomy = require('ardrone-autonomy')
+        , fs = require('fs')
+        ;
 
-    this.client = arDrone.createClient();
     this.prototype = Object.create(copterInterface);
+    this.client = ardrone.createClient();
+
+    this.isInitialized = false;
+    this.isRunning = false;
+
+    this.init = function() {
+
+        console.log(new Date().toLocaleTimeString() + " : Initializing...");
+
+        this.createMission(this.client);
+
+        console.log(new Date().toLocaleTimeString() + " : Starting drone...");
+        this.mission
+            .takeoff()
+            .zero()
+            .hover(2000);
+
+        this.isInitialized = true;
+
+        console.log(new Date().toLocaleTimeString() + " : Drone ready!");
+    };
+
+    this.createMission = function(client, options){
+
+        var control = new autonomy.Controller(client, options);
+        this.mission = new autonomy.Mission(client, control, options);
+    };
+
+    this.startMission = function(){
+
+        if(this.isRunning) {
+            console.log('Mission already running, please wait until completed!')
+        } else {
+            this.isRunning = true;
+            var theMission = this.mission;
+            var runningFlag = this.isRunning;
+            theMission.run(function (err, result) {
+                if (err) {
+                    console.trace("Oops, something bad happened: %s", err.message);
+                    theMission.client().stop();
+                    theMission.client().land();
+                } else {
+                    console.log("We are done!");
+//                theMission.client().stop();
+                }
+                runningFlag = false;
+            });
+
+            console.log(new Date().toLocaleTimeString() + " : Running mission...");
+        }
+    };
+
+    this.takePicture = function(callback){
+        // First we disable the control to have the drone in stable
+        // hover mode
+        this.mission.control().disable();
+        var self = this;
+
+        // Wait for a new image
+        setTimeout(function() {
+            this.client.getPngStream().once('data', function(data) {
+                var fileName = 'pano_' + self._counter++ + '.png';
+                // Save the file
+                fs.writeFile(fileName, data, function(err){
+                    if (err) console.log(err);
+                    console.log(fileName + ' Saved');
+
+                    // Renable the control
+                    callback();
+                });
+            });
+        }, 1000);
+    };
+
+/*    function navdata_option_mask(c) {
+        return 1 << c;
+    }*/
+
+// From the SDK.
+/*    var navdata_options = (
+        navdata_option_mask(arDroneConstants.options.DEMO)
+        | navdata_option_mask(arDroneConstants.options.VISION_DETECT)
+        | navdata_option_mask(arDroneConstants.options.MAGNETO)
+        | navdata_option_mask(arDroneConstants.options.WIFI)
+        );*/
+
+// Land on ctrl-c
+/*    var exiting = false;
+    var theMission = this.mission;
+    process.on('SIGINT', function() {
+        if (exiting) {
+            process.exit(0);
+        } else {
+            console.log('Got SIGINT. Landing, press Control-C again to force exit.');
+            exiting = true;
+            theMission.control().disable();
+            theMission.client().land(function() {
+                process.exit(0);
+            });
+        }
+    });*/
+
+// Connect and configure the drone
+/*    this.mission.client().config('general:navdata_demo', true);
+    this.mission.client().config('general:navdata_options', navdata_options);
+    this.mission.client().config('video:video_channel', 1);
+    this.mission.client().config('detect:detect_type', 12);*/
+
+// Log mission for debugging purposes
+    //this.mission.log("mission-" + dateFormat(new Date(), "yyyy-mm-dd_hh-MM-ss") + ".txt");
 
     console.log("New copter instantiated!");
 };
@@ -22,6 +134,62 @@ CopterApplication.NodeCopter.prototype = {
         console.log("land");
         this.client.land();
     },
+    up: function(speed, duration){
+        console.log("up " + speed + ", duration " + duration);
+        this.client.up(speed);
+        var client = this.client;
+        setTimeout(function(){client.stop();}, duration);
+    },
+    down: function(speed, duration){
+        console.log("down " + speed + ", duration " + duration);
+        this.client.down(speed);
+        var client = this.client;
+        setTimeout(function(){client.stop();}, duration);
+    },
+    front: function(speed, duration){
+        console.log("front " + speed + ", duration " + duration);
+        this.client
+            .after(100, function() {
+                this.front(speed);
+            })
+            .after(duration, function() {
+                this.stop();
+            });
+    },
+    back: function(speed, duration){
+        console.log("back " + speed + ", duration " + duration);
+        this.client
+            .after(100, function() {
+                this.back(speed);
+            })
+            .after(duration, function() {
+                this.stop();
+            });
+    },
+    left: function(speed, duration){
+        console.log("left " + speed + ", duration " + duration);
+        this.client
+            .after(100, function() {
+                this.left(speed);
+            })
+            .after(duration, function() {
+                this.stop();
+            });
+    },
+    right: function(speed, duration){
+        console.log("right " + speed + ", duration " + duration);
+        this.client
+            .after(100, function() {
+                this.right(speed);
+            })
+            .after(duration, function() {
+                this.stop();
+            });
+    },
+    stop: function(){
+        console.log("stop");
+        this.client.stop();
+    },
     turnAround : function(direction, speed){
         console.log("turnAround " + direction + ", " + speed);
         if(direction === 'left'){
@@ -30,33 +198,68 @@ CopterApplication.NodeCopter.prototype = {
             this.client.clockwise(speed);
         }
     },
-    up: function(speed){
-        console.log("up " + speed);
-        this.client.up(speed);
+    crane : function() {
+
+        console.log(new Date().toLocaleTimeString() + " : Configuring crane move...");
+
+        if(this.isInitialized === false){
+            this.init();
+        } else {
+            this.createMission(this.client);
+        }
+
+        this.mission
+            .altitude(1.8)
+            .hover(1000)
+            .altitude(0.2)
+            .hover(1000);
+            //.land();
+
+        this.startMission();
     },
-    down: function(speed){
-        console.log("down " + speed);
-        this.client.down(speed);
+    square : function() {
+
+        console.log(new Date().toLocaleTimeString() + " : Configuring square move...");
+
+        if(this.isInitialized === false){
+            this.init();
+        } else {
+            this.createMission(this.client);
+        }
+
+        this.mission
+            .altitude(1.0)
+            .hover(1000)
+            .forward(0.5)
+            .left(0.5)
+            .backward(0.5)
+            .right(0.5)
+            .hover(1000);
+//            .land();
+
+        this.startMission();
     },
-    front: function(speed){
-        console.log("front " + speed);
-        this.client.front(speed);
-    },
-    back: function(speed){
-        console.log("back " + speed);
-        this.client.back(speed);
-    },
-    left: function(speed){
-        console.log("left " + speed);
-        this.client.left(speed);
-    },
-    right: function(speed){
-        console.log("right " + speed);
-        this.client.right(speed);
-    },
-    stop: function(){
-        console.log("stop");
-        this.client.stop();
+    panorama : function() {
+
+        console.log(new Date().toLocaleTimeString() + " : Configuring square move...");
+
+        if(this.isInitialized === false){
+            this.init();
+        } else {
+            this.createMission(this.client);
+        }
+
+        this.mission
+            .altitude(1.0)
+            .hover(1000)
+            .forward(0.5)
+            .left(0.5)
+            .backward(0.5)
+            .right(0.5)
+            .hover(1000);
+//            .land();
+
+        this.startMission();
     },
 
     /* animation:

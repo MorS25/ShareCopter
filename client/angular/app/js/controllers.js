@@ -31,17 +31,17 @@ angular.module('myApp.controllers', [])
         ];
 
         $scope.takeOff = function(){
-            addProtocolEntry("Take off command sent");
+            LogService.informUser("Take off command sent");
             DroneService.takeOff();
         };
 
         $scope.land = function(){
-            addProtocolEntry("Take off command sent");
+            LogService.informUser("Take off command sent");
             DroneService.land();
         };
 
         $scope.stop = function(){
-            addProtocolEntry("Stop command sent");
+            LogService.informUser("Stop command sent");
             DroneService.stop();
         };
 
@@ -106,4 +106,8 @@ angular.module('myApp.controllers', [])
         function errorCallBack(data) {
             addProtocolEntry(data);
         }
+
+        $scope.getCommands = function() {
+            return LogService.getCommands();
+        };
   }]);

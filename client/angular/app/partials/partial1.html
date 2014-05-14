@@ -22,11 +22,11 @@
         <input type="button" value="Forward" ng-mousedown="forwardMouseDown()" ng-mouseup="stop()">
         <input type="button" value="Backward" ng-mousedown="backwardMouseDown()" ng-mouseup="stop()">
     </div>
-    <div>
+    <div id="console">
         <!-- Protocol Panel -->
         <ul id="protocol-listing">
-            <li ng-repeat="protocolEntry in commandProtocol">
-                <pre>{{protocolEntry.entry || 'null'}}</pre>
+            <li ng-repeat="protocolEntry in getCommands()">
+                <pre>{{protocolEntry.date | date : 'h:mm:ss'}} - {{ protocolEntry.entry || 'null'}}</pre>
             </li>
          </ul>
     </div>

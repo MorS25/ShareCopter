@@ -2,9 +2,28 @@
 
 /* Services */
 
-var droneServices = angular.module('myApp.services', []);
+var appServices = angular.module('myApp.services', []);
 
-droneServices.service('DroneService', ['$http', function ($http) {
+appServices.service('LogService', [function () {
+
+    var commandProtocol = [{
+        entry : "Nothing done yet.",
+        date: Date.now()
+    }];
+
+    this.informUser = function (entryText) {
+        commandProtocol.splice(0,0, {entry: entryText, date: Date.now()});
+        console.log(entryText);
+    };
+
+    this.getCommands = function () {
+        return commandProtocol;
+    };
+
+}]);
+
+appServices.service('DroneService', ['$http', 'LogService', function ($http, LogService) {
+
     var baseAddress = "http://localhost:3000/";
     var localSuccessCallBack = function(){};
     var localErrorCallBack = function() {};
@@ -12,30 +31,30 @@ droneServices.service('DroneService', ['$http', function ($http) {
     this.takeOff = function () {
         $http.get(baseAddress + 'takeoff')
             .success(function () {
-                localSuccessCallBack('Took off');
+                LogService.informUser('Took off');
             })
             .error(function (data) {
-                localErrorCallBack('failed take off');
+                LogService.informUser('failed take off');
             });
     };
 
     this.land = function () {
         $http.get(baseAddress + 'land')
             .success(function () {
-                localSuccessCallBack('Landed');
+                LogService.informUser('Landed');
             })
             .error(function (data) {
-                localErrorCallBack('failed to  land');
+                LogService.informUser('failed to  land');
             });
     };
 
     this.stop = function () {
         $http.get(baseAddress + 'stop')
             .success(function () {
-                localSuccessCallBack('Stopped');
+                LogService.informUser('Stopped');
             })
             .error(function (data) {
-                localErrorCallBack('Failed to stop (boom)');
+                LogService.informUser('Failed to stop (boom)');
             });
     };
 
@@ -70,10 +89,10 @@ droneServices.service('DroneService', ['$http', function ($http) {
 
         $http.get(url)
             .success(function () {
-                localSuccessCallBack('Moved ' + direction + ' with ' + speed);
+                LogService.informUser('Moved ' + direction + ' with ' + speed);
             })
             .error(function (data) {
-                localErrorCallBack('Failed to move ' + direction);
+                LogService.informUser('Failed to move ' + direction);
             });
     };
 
