@@ -7,10 +7,11 @@ CopterApplication.NodeCopter = function(){
     var copterInterface = require('../server/copterInterface')
         , ardrone = require('ar-drone')
         , autonomy = require('ardrone-autonomy')
+        , fs = require('fs')
         ;
 
     this.prototype = Object.create(copterInterface);
-    this.client = ardrone.createClient(options);
+    this.client = ardrone.createClient();
 
     this.isInitialized = false;
     this.isRunning = false;
@@ -40,12 +41,6 @@ CopterApplication.NodeCopter = function(){
 
     this.startMission = function(){
 
-        if(this.isInitialized === false){
-            this.init();
-        } else {
-            this.createMission(this.client);
-        }
-
         if(this.isRunning) {
             console.log('Mission already running, please wait until completed!')
         } else {
@@ -66,6 +61,28 @@ CopterApplication.NodeCopter = function(){
 
             console.log(new Date().toLocaleTimeString() + " : Running mission...");
         }
+    };
+
+    this.takePicture = function(callback){
+        // First we disable the control to have the drone in stable
+        // hover mode
+        this.mission.control().disable();
+        var self = this;
+
+        // Wait for a new image
+        setTimeout(function() {
+            this.client.getPngStream().once('data', function(data) {
+                var fileName = 'pano_' + self._counter++ + '.png';
+                // Save the file
+                fs.writeFile(fileName, data, function(err){
+                    if (err) console.log(err);
+                    console.log(fileName + ' Saved');
+
+                    // Renable the control
+                    callback();
+                });
+            });
+        }, 1000);
     };
 
 /*    function navdata_option_mask(c) {
@@ -185,6 +202,12 @@ CopterApplication.NodeCopter.prototype = {
 
         console.log(new Date().toLocaleTimeString() + " : Configuring crane move...");
 
+        if(this.isInitialized === false){
+            this.init();
+        } else {
+            this.createMission(this.client);
+        }
+
         this.mission
             .altitude(1.8)
             .hover(1000)
@@ -197,6 +220,34 @@ CopterApplication.NodeCopter.prototype = {
     square : function() {
 
         console.log(new Date().toLocaleTimeString() + " : Configuring square move...");
+
+        if(this.isInitialized === false){
+            this.init();
+        } else {
+            this.createMission(this.client);
+        }
+
+        this.mission
+            .altitude(1.0)
+            .hover(1000)
+            .forward(0.5)
+            .left(0.5)
+            .backward(0.5)
+            .right(0.5)
+            .hover(1000);
+//            .land();
+
+        this.startMission();
+    },
+    panorama : function() {
+
+        console.log(new Date().toLocaleTimeString() + " : Configuring square move...");
+
+        if(this.isInitialized === false){
+            this.init();
+        } else {
+            this.createMission(this.client);
+        }
 
         this.mission
             .altitude(1.0)
