@@ -121,11 +121,19 @@ app.get('/square', function(req, res){
     copterInstance.square();
 });
 
-app.get('/turnaround/direction/:direction/speed/:speed', function(req, res){
+app.get('/turn/direction/:direction/angle/:angle', function(req, res){
     var direction = validator.validateDirection(req, res);
-    var speed = validator.validateSpeed(req, res);
-    copterInstance.turnAround(direction, speed);
+    var angle = validator.validateAngle(req, res);
     res.send('OK');
+    copterInstance.turn(direction, angle, 1);
+});
+
+app.get('/turn/direction/:direction/angle/:angle/altitude/:altitude', function(req, res){
+    var direction = validator.validateDirection(req, res);
+    var angle = validator.validateAngle(req, res);
+    var altitude = validator.validateAltitude(req, res);
+    res.send('OK');
+    copterInstance.turn(direction, angle, altitude);
 });
 
 app.get('/animate/:animation/duration/:duration', function(req, res){

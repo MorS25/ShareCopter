@@ -1,5 +1,7 @@
 // Copter Implementation
-var CopterApplication = CopterApplication || {};
+var CopterApplication = CopterApplication || {
+    _counter : 0
+};
 
 CopterApplication.NodeCopter = function(){
     console.log("Creating new client...");
@@ -190,13 +192,29 @@ CopterApplication.NodeCopter.prototype = {
         console.log("stop");
         this.client.stop();
     },
-    turnAround : function(direction, speed){
-        console.log("turnAround " + direction + ", " + speed);
-        if(direction === 'left'){
-            this.client.counterClockwise(speed);
-        } else{
-            this.client.clockwise(speed);
+    turn : function(direction, angle, altitude) {
+
+        console.log(new Date().toLocaleTimeString() + " : Configuring turn move...");
+        console.log(new Date().toLocaleTimeString() + " : direction: '" + direction + "', angle: '" + angle + "', altitude: '" + altitude + "'");
+
+        if(this.isInitialized === false){
+            this.init();
+        } else {
+            this.createMission(this.client);
         }
+
+        this.mission
+            .hover(500)
+            .go({x:0, y:0})
+            .altitude(altitude);
+
+        if(direction === 'left') {
+            this.mission.ccw(angle);
+        } else{
+            this.mission.cw(angle);
+        }
+
+        this.startMission();
     },
     crane : function() {
 
@@ -218,28 +236,6 @@ CopterApplication.NodeCopter.prototype = {
         this.startMission();
     },
     square : function() {
-
-        console.log(new Date().toLocaleTimeString() + " : Configuring square move...");
-
-        if(this.isInitialized === false){
-            this.init();
-        } else {
-            this.createMission(this.client);
-        }
-
-        this.mission
-            .altitude(1.0)
-            .hover(1000)
-            .forward(0.5)
-            .left(0.5)
-            .backward(0.5)
-            .right(0.5)
-            .hover(1000);
-//            .land();
-
-        this.startMission();
-    },
-    panorama : function() {
 
         console.log(new Date().toLocaleTimeString() + " : Configuring square move...");
 
