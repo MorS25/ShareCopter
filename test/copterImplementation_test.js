@@ -41,7 +41,7 @@ exports['copter'] = {
       test.done();
   },
   'turn': function(test) {
-      test.expect(2);
+      test.expect(3);
       copterInstance.turn('right', 90, 1.0);
       var calledParams = copterInstance.turnCalledWith;
       test.equal(calledParams.direction, 'right');

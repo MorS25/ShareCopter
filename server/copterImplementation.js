@@ -100,9 +100,31 @@ CopterApplication.NodeCopter.prototype = {
     },
     up: function(speed, duration){
         console.log("up " + speed + ", duration " + duration);
+
         this.client.up(speed);
         var client = this.client;
-        setTimeout(function(){client.stop();}, duration);
+        var mission = this.mission;
+        //setTimeout(function(){client.stop();}, duration);
+
+        if(this.isInitialized === false){
+            this.init();
+        } else {
+            this.createMission(this.client);
+        }
+
+        this.mission.task(function() {
+            client.up(speed);
+        });
+
+        this.mission.task(function() {
+            mission.wait(duration);
+        });
+
+        this.mission.task(function() {
+            client.stop();
+        });
+
+        this.startMission();
     },
     down: function(speed, duration){
         console.log("down " + speed + ", duration " + duration);
