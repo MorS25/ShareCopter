@@ -96,13 +96,13 @@ appServices.service('DroneService', ['$http', 'LogService', function ($http, Log
             });
     };
 
-    this.doPredefinedMovement = function(command, speed) {
-        var url = baseAddress + 'animate/{0}/speed/{1}';
-        url = url.format(command, speed);
+    this.doPredefinedMovement = function(command, duration) {
+        var url = baseAddress + 'animate/{0}/duration/{1}';
+        url = url.format(command, duration);
         console.log(url);
         $http.get(url)
             .success(function () {
-                localSuccessCallBack('Succeeded animation ' + command+ ' with ' + speed);
+                localSuccessCallBack('Succeeded animation ' + command+ ' with ' + duration);
             })
             .error(function (data) {
                 localErrorCallBack('Failed animation '+ command);
