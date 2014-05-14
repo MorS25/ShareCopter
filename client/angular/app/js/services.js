@@ -7,10 +7,13 @@ var appServices = angular.module('myApp.services', []);
 
 appServices.service('LogService', [function () {
 
-    var commandProtocol = [{entry : "Nothing done yet."}];
+    var commandProtocol = [{
+        entry : "Nothing done yet.",
+        date: Date.now()
+    }];
 
     this.informUser = function (entryText) {
-        commandProtocol.splice(0,0, {entry: entryText});
+        commandProtocol.splice(0,0, {entry: entryText, date: Date.now()});
         console.log(entryText);
     };
 

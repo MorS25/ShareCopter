@@ -22,7 +22,7 @@
         <!-- Protocol Panel -->
         <ul id="protocol-listing">
             <li ng-repeat="protocolEntry in getCommands()">
-                <pre>{{protocolEntry.entry || 'null'}}</pre>
+                <pre>{{protocolEntry.date | date : 'h:mm:ss'}} - {{ protocolEntry.entry || 'null'}}</pre>
             </li>
          </ul>
     </div>
