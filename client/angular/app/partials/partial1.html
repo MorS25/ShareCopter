@@ -21,7 +21,7 @@
     <div>
         <!-- Protocol Panel -->
         <ul id="protocol-listing">
-            <li ng-repeat="protocolEntry in commandProtocol">
+            <li ng-repeat="protocolEntry in getCommands()">
                 <pre>{{protocolEntry.entry || 'null'}}</pre>
             </li>
          </ul>

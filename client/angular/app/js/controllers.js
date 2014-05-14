@@ -3,33 +3,23 @@
 /* Controllers */
 
 angular.module('myApp.controllers', [])
-  .controller('MyCtrl1', ['$scope','DroneService', function($scope, DroneService) {
-        $scope.commandProtocol = [{entry : "Nothing done yet."}];
+  .controller('MyCtrl1', ['$scope', 'LogService', 'DroneService', function($scope, LogService, DroneService) {
+
         $scope.verticalSpeed = 100;
         $scope.horizontalSpeed = 100;
 
-
-        /*DroneService.initializeCallback(
-        function() {
-            addProtocolEntry(data);
-        },
-        function() {
-            addProtocolEntry(data);
-        });*/
-
-
         $scope.takeOff = function(){
-            addProtocolEntry("Take off command sent");
+            LogService.informUser("Take off command sent");
             DroneService.takeOff();
         };
 
         $scope.land = function(){
-            addProtocolEntry("Take off command sent");
+            LogService.informUser("Take off command sent");
             DroneService.land();
         };
 
         $scope.stop = function(){
-            addProtocolEntry("Stop command sent");
+            LogService.informUser("Stop command sent");
             DroneService.stop();
         };
 
@@ -45,8 +35,6 @@ angular.module('myApp.controllers', [])
                 //stop
                 DroneService.stop();
             }
-
-           //$scope.commandProtocol.splice(0,1, {entry: $scope.verticalSpeed / 100});
         };
 
         $scope.horizontalChange = function(){
@@ -61,21 +49,9 @@ angular.module('myApp.controllers', [])
                 //stop
                 DroneService.stop();
             }
-
-           //$scope.commandProtocol.splice(0,1, {entry: $scope.verticalSpeed / 100});
         };
 
-
-
-        function addProtocolEntry(entryText){
-            $scope.commandProtocol.splice(0,1, {entry: entryText});
-        }
-
-        function successCallBack(data) {
-            addProtocolEntry(data);
-        }
-
-        function errorCallBack(data) {
-            addProtocolEntry(data);
-        }
+        $scope.getCommands = function() {
+            return LogService.getCommands();
+        };
   }]);
