@@ -27,26 +27,32 @@ CopterApplication.NodeCopter.prototype = {
         console.log("turnAround " + direction + ", " + speed);
         this.turnAroundCalledWith = {direction: direction, speed: speed};
     },
-    up: function(speed){
+    up: function(speed, duration){
         console.log("up " + speed);
     },
-    down: function(speed){
+    down: function(speed, duration){
         console.log("down " + speed);
     },
-    front: function(speed){
+    front: function(speed, duration){
         console.log("front " + speed);
     },
-    back: function(speed){
+    back: function(speed, duration){
         console.log("back " + speed);
     },
-    left: function(speed){
+    left: function(speed, duration){
         console.log("left " + speed);
     },
-    right: function(speed){
+    right: function(speed, duration){
         console.log("right " + speed);
     },
     stop: function(){
         console.log("stop");
+    },
+    crane: function(){
+        console.log("crane");
+    },
+    square: function(){
+        console.log("square");
     },
     animate: function(animation, duration) {
         console.log("animate " + animation + ", " + duration + " ms");
