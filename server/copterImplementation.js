@@ -84,19 +84,6 @@ CopterApplication.NodeCopter = function(){
             });
         }, 1000);
     };
-
-/*    function navdata_option_mask(c) {
-        return 1 << c;
-    }*/
-
-// From the SDK.
-/*    var navdata_options = (
-        navdata_option_mask(arDroneConstants.options.DEMO)
-        | navdata_option_mask(arDroneConstants.options.VISION_DETECT)
-        | navdata_option_mask(arDroneConstants.options.MAGNETO)
-        | navdata_option_mask(arDroneConstants.options.WIFI)
-        );*/
-    
     console.log("New copter instantiated!");
 };
 
