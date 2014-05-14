@@ -39,49 +39,55 @@ droneServices.service('DroneService', ['$http', function ($http) {
             });
     };
 
-    this.up = function (speed) {
-        $http.get(baseAddress + 'up/speed/' + speed)
+    this.turnAround = function(direction, speed) {
+        $http.get(baseAddress + 'turnaround/direction/' + direction + '/speed/' + speed)
             .success(function () {
-                this.localSuccessCallBack('Gone up with ' + speed);
+                localSuccessCallBack('Turned ' + direction + ' with ' + speed);
             })
             .error(function (data) {
-                this.localErrorCallBack('Failed to go up');
+                localErrorCallBack('Failed to turn '+ direction);
             });
     };
 
-    this.down = function (speed) {
-        $http.get(baseAddress + 'down/speed/' + speed)
+    this.move = function(direction, speed) {
+        var url = baseAddress + '{0}/speed/{1}';
+        switch(direction) {
+            case "up"       : url = url.format("up", speed);
+                              break;
+            case "down"     : url = url.format("down", speed);
+                              break;
+            case "forward"  : url = url.format("front", speed);
+                              break;
+            case "backward" : url = url.format("back", speed);
+                              break;
+            case "left"     : url = url.format("left", speed);
+                              break;
+            case "right"    : url = url.format("right", speed);
+                              break;
+            default         : localErrorCallBack("Will not move because of invalid parameter: " + direction)
+                              return;
+        };
+
+        $http.get(url)
             .success(function () {
-                localSuccessCallBack('Gone down with ' + speed);
+                localSuccessCallBack('Moved ' + direction + ' with ' + speed);
             })
             .error(function (data) {
-                localErrorCallBack('Failed to go down');
+                localErrorCallBack('Failed to move ' + direction);
             });
     };
 
-    this.left = function (speed) {
-        $http.get(baseAddress + 'left/speed/' + speed)
+    this.doMovement = function(command, speed) {
+        var url = baseAddress + 'animate/{0}/speed/{1}';
+        url = url.format(command, speed);
+
+        $http.get();
+            console.log("URL: " )
             .success(function () {
-                localSuccessCallBack('Gone left down with ' + speed);
+                localSuccessCallBack('Succeeded animation ' + command+ ' with ' + speed);
             })
             .error(function (data) {
-                localErrorCallBack('Failed to go left');
+                localErrorCallBack('Failed animation '+ command);
             });
-    };
-
-    this.right = function (speed) {
-        $http.get(baseAddress + 'right/speed/' + speed)
-            .success(function () {
-                localSuccessCallBack('Gone right down with ' + speed);
-            })
-            .error(function (data) {
-                localErrorCallBack('Failed to go right');
-            });
-    };
-
-    /*this.initializeCallbacks = function (successCallBack, errorCallBack) {
-        localSuccessCallBack = successCallBack;
-        localErrorCallBack = errorCallBack;
-    };*/
-
+    }
 }]);
