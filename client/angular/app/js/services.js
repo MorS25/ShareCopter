@@ -58,10 +58,10 @@ appServices.service('DroneService', ['$http', 'LogService', function ($http, Log
             });
     };
 
-    this.turnAround = function(direction, speed) {
-        $http.get(baseAddress + 'turnaround/direction/' + direction + '/speed/' + speed)
+    this.turnAround = function(direction, angle) {
+        $http.get(baseAddress + 'turn/direction/' + direction + '/angle/' + angle)
             .success(function () {
-                localSuccessCallBack('Turned ' + direction + ' with ' + speed);
+                localSuccessCallBack('Turned ' + direction + ' with ' + angle);
             })
             .error(function (data) {
                 localErrorCallBack('Failed to turn '+ direction);
@@ -96,12 +96,11 @@ appServices.service('DroneService', ['$http', 'LogService', function ($http, Log
             });
     };
 
-    this.doMovement = function(command, speed) {
+    this.doPredefinedMovement = function(command, speed) {
         var url = baseAddress + 'animate/{0}/speed/{1}';
         url = url.format(command, speed);
-
-        $http.get();
-            console.log("URL: " )
+        console.log(url);
+        $http.get(url)
             .success(function () {
                 localSuccessCallBack('Succeeded animation ' + command+ ' with ' + speed);
             })

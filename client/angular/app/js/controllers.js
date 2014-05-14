@@ -3,8 +3,7 @@
 /* Controllers */
 
 angular.module('myApp.controllers', [])
-  .controller('MyCtrl1', ['$scope','DroneService', function($scope, DroneService) {
-        $scope.commandProtocol = [{entry : "Nothing done yet."}];
+  .controller('MyCtrl1', ['$scope','LogService', 'DroneService', function($scope, LogService, DroneService) {
         $scope.verticalSpeed = 100;
         $scope.horizontalSpeed = 100;
 
@@ -27,7 +26,7 @@ angular.module('myApp.controllers', [])
             {name: 'Double Phi Theta Mixed',    command: 'doublePhiThetaMixed'},
             {name: 'Flip Ahead',                command: 'flipAhead'},
             {name: 'Flip Behind',               command: 'flipBehind'},
-            {name: 'Flip Right',                command: 'flipRight'},
+            {name: 'Flip Right',                command: 'flipRight'}
         ];
 
         $scope.takeOff = function(){
@@ -71,41 +70,29 @@ angular.module('myApp.controllers', [])
         };
 
         $scope.leftMouseDown = function () {
-            addProtocolEntry("Turn left command sent");
-            DroneService.turnAround("left", 0.5);
+            LogService.informUser("Turn left command sent");
+            DroneService.turnAround("left", 90);
         };
 
         $scope.rightMouseDown = function () {
-            addProtocolEntry("Turn right command sent");
-            DroneService.turnAround("right", 0.5);
+            LogService.informUser("Turn right command sent");
+            DroneService.turnAround("right", 90);
         };
 
         $scope.forwardMouseDown = function () {
-            addProtocolEntry("Move forward command sent");
+            LogService.informUser("Move forward command sent");
             DroneService.move("forward", 0.5);
         };
 
         $scope.backwardMouseDown = function () {
-            addProtocolEntry("Move backward command sent");
+            LogService.informUser("Move backward command sent");
             DroneService.move("backward", 0.5);
         };
 
         $scope.doMovement = function () {
-            addProtocolEntry("Do movement command '"+ $scope.selectedMovement.command +"' sent");
-            DroneService.doMovement($scope.selectedMovement.command, 5);
+            LogService.informUser("Do movement command '"+ $scope.selectedMovement.command +"' sent");
+            DroneService.doPredefinedMovement($scope.selectedMovement.command, 10000);
         };
-
-        function addProtocolEntry(entryText){
-            $scope.commandProtocol.splice(0,1, {entry: entryText});
-        }
-
-        function successCallBack(data) {
-            addProtocolEntry(data);
-        }
-
-        function errorCallBack(data) {
-            addProtocolEntry(data);
-        }
 
         $scope.getCommands = function() {
             return LogService.getCommands();
