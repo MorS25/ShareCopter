@@ -101,10 +101,24 @@ CopterApplication.NodeCopter.prototype = {
     up: function(speed, duration){
         console.log("up " + speed + ", duration " + duration);
 
-        this.client.up(speed);
+        if(this.isInitialized === false){
+            this.init();
+        } else {
+            this.createMission(this.client);
+        }
+
         var client = this.client;
-        var mission = this.mission;
-        //setTimeout(function(){client.stop();}, duration);
+        this.mission
+            .task(function() {
+                client.up(speed);
+            })
+            .wait(duration)
+            .hover(100);
+
+        this.startMission();
+    },
+    down: function(speed, duration){
+        console.log("down " + speed + ", duration " + duration);
 
         if(this.isInitialized === false){
             this.init();
@@ -112,25 +126,15 @@ CopterApplication.NodeCopter.prototype = {
             this.createMission(this.client);
         }
 
-        this.mission.task(function() {
-            client.up(speed);
-        });
-
-        this.mission.task(function() {
-            mission.wait(duration);
-        });
-
-        this.mission.task(function() {
-            client.stop();
-        });
+        var client = this.client;
+        this.mission
+            .task(function() {
+                client.down(speed);
+            })
+            .wait(duration)
+            .hover(100);
 
         this.startMission();
-    },
-    down: function(speed, duration){
-        console.log("down " + speed + ", duration " + duration);
-        this.client.down(speed);
-        var client = this.client;
-        setTimeout(function(){client.stop();}, duration);
     },
     front: function(speed, duration){
         console.log("front " + speed + ", duration " + duration);
@@ -194,7 +198,7 @@ CopterApplication.NodeCopter.prototype = {
 
         if(direction === 'left') {
             this.mission.ccw(angle);
-        } else{
+        } else {
             this.mission.cw(angle);
         }
 
