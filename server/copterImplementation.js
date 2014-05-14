@@ -8,9 +8,48 @@ CopterApplication.NodeCopter = function(){
         , autonomy = require('ardrone-autonomy')
         ;
 
-    this.mission = autonomy.createMission();
-    this.client = this.mission.client();
     this.prototype = Object.create(copterInterface);
+
+    this.isInitialized = false;
+
+    this.init = function() {
+
+        console.log(new Date().toLocaleTimeString() + " : Initializing...");
+
+        this.initMission();
+
+        console.log(new Date().toLocaleTimeString() + " : Starting drone...");
+        this.mission
+            .takeoff()
+            .zero()
+            .hover(2000);
+
+        this.isInitialized = true;
+
+        console.log(new Date().toLocaleTimeString() + " : Drone ready!");
+    };
+
+    this.initMission = function(){
+        this.mission = autonomy.createMission();
+        this.client = this.mission.client();
+    };
+
+    this.startMission = function(){
+
+        var theMission = this.mission;
+        theMission.run(function (err, result) {
+            if (err) {
+                console.trace("Oops, something bad happened: %s", err.message);
+                theMission.client().stop();
+                theMission.client().land();
+            } else {
+                console.log("We are done!");
+//                theMission.client().stop();
+            }
+        });
+
+        console.log(new Date().toLocaleTimeString() + " : Running mission...");
+    };
 
 /*    function navdata_option_mask(c) {
         return 1 << c;
@@ -126,56 +165,45 @@ CopterApplication.NodeCopter.prototype = {
         }
     },
     crane : function() {
-        console.log(new Date().toLocaleTimeString() + " : crane move");
-        this.client.takeoff();
-        this.client
-            .after(5000, function() {
 
-                console.log(new Date().toLocaleTimeString() + " : up");
-                this.up(0.1);
-            })
-            .after(2000, function() {
+        if(this.isInitialized === false){
+            this.init();
+        } else {
+            this.initMission();
+        }
 
-                console.log(new Date().toLocaleTimeString() + " : down");
-                this.down(0.1);
-            })
-            .after(2000, function() {
+        console.log(new Date().toLocaleTimeString() + " : Configuring crane move...");
 
-                console.log(new Date().toLocaleTimeString() + " : land");
-                this.land();
-            });
+        this.mission
+            .altitude(1.8)
+            .hover(1000)
+            .altitude(0.2)
+            .hover(1000);
+            //.land();
+
+        this.startMission();
     },
     square : function() {
 
-        var df = require('dateformat');
-        console.log(df(new Date(), "hh-MM-ss") + " : Configuring square move...");
+        if(this.isInitialized === false){
+            this.init();
+        } else {
+            this.initMission();
+        }
 
-        this.mission.takeoff()
-            .zero()
+        console.log(new Date().toLocaleTimeString() + " : Configuring square move...");
+
+        this.mission
+            .altitude(1.0)
             .hover(1000)
-            .altitude(1.2)
-            .hover(1000)
+            .forward(0.5)
             .left(0.5)
-            .right(1.0)
-            .go({x:0, y:0})
-            .hover(1000)
-            .land();
+            .backward(0.5)
+            .right(0.5)
+            .hover(1000);
+//            .land();
 
-        var theMission = this.mission;
-
-        theMission.run(function (err, result) {
-            if (err) {
-                console.trace("Oops, something bad happened: %s", err.message);
-                console.log("Oops!");
-                theMission.client().stop();
-                theMission.client().land();
-            } else {
-                console.log("We are done!");
-//                process.exit(0);
-            }
-        });
-
-        console.log(df(new Date(), "hh-MM-ss") + " : Running mission...");
+        this.startMission();
     },
 
     /* animation:
