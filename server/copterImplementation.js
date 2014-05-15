@@ -203,6 +203,8 @@ CopterApplication.NodeCopter.prototype = {
         console.log("altitude " + height + " m");
 
         this.mission.altitude(height);
+
+        this.startMission();
     }
 };
 
