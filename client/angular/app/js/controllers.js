@@ -93,6 +93,7 @@ angular.module('myApp.controllers', [])
 
         $scope.doMovement = function () {
             if($scope.selectedMovement.command === '') {
+                LogService.informUser("Choose a magic word to make me move!");
                 return;
             }
             LogService.informUser("Do movement command '"+ $scope.selectedMovement.command +"' sent");

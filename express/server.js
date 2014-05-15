@@ -39,7 +39,7 @@ app.get('/altitude/:altitude', function(req, res){
 app.get('/up/speed/:speed', function(req, res){
     var speed = validator.validateSpeed(req, res);
     res.send('OK');
-    copterInstance.up(speed, 1000);
+    copterInstance.up(speed, 10000);
 });
 
 app.get('/up/speed/:speed/duration/:duration', function(req, res){
@@ -52,7 +52,7 @@ app.get('/up/speed/:speed/duration/:duration', function(req, res){
 app.get('/down/speed/:speed', function(req, res){
     var speed = validator.validateSpeed(req, res);
     res.send('OK');
-    copterInstance.down(speed, 1000);
+    copterInstance.down(speed, 10000);
 });
 
 app.get('/down/speed/:speed/duration/:duration', function(req, res){
@@ -65,7 +65,7 @@ app.get('/down/speed/:speed/duration/:duration', function(req, res){
 app.get('/left/speed/:speed', function(req, res){
     var speed = validator.validateSpeed(req, res);
     res.send('OK');
-    copterInstance.left(speed, 1000);
+    copterInstance.left(speed, 10000);
 });
 
 app.get('/left/speed/:speed/duration/:duration', function(req, res){
@@ -78,7 +78,7 @@ app.get('/left/speed/:speed/duration/:duration', function(req, res){
 app.get('/right/speed/:speed', function(req, res){
     var speed = validator.validateSpeed(req, res);
     res.send('OK');
-    copterInstance.right(speed, 1000);
+    copterInstance.right(speed, 10000);
 });
 
 app.get('/right/speed/:speed/duration/:duration', function(req, res){
@@ -91,7 +91,7 @@ app.get('/right/speed/:speed/duration/:duration', function(req, res){
 app.get('/front/speed/:speed', function(req, res){
     var speed = validator.validateSpeed(req, res);
     res.send('OK');
-    copterInstance.front(speed, 1000);
+    copterInstance.front(speed, 10000);
 });
 
 app.get('/front/speed/:speed/duration/:duration', function(req, res){
@@ -104,7 +104,7 @@ app.get('/front/speed/:speed/duration/:duration', function(req, res){
 app.get('/back/speed/:speed', function(req, res){
     var speed = validator.validateSpeed(req, res);
     res.send('OK');
-    copterInstance.back(speed, 1000);
+    copterInstance.back(speed, 10000);
 });
 
 app.get('/back/speed/:speed/duration/:duration', function(req, res){
