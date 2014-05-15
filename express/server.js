@@ -148,8 +148,16 @@ app.get('/animate/:animation/duration/:duration', function(req, res){
     copterInstance.animate(animation, duration);
 });
 
+var http = require("http"),
+    droneStream = require("dronestream");
+
+app.get('/video/', function(req, res){
+    require("fs").createReadStream(__dirname + "/videoStream.html").pipe(res);
+});
 
 // Callback
 var server = app.listen(3000, function() {
     console.log('Listening on port %d', server.address().port);
 });
+
+droneStream.listen(server);
