@@ -42,24 +42,10 @@ app.get('/up/speed/:speed', function(req, res){
     copterInstance.up(speed, 1000);
 });
 
-app.get('/up/speed/:speed/duration/:duration', function(req, res){
-    var speed = validator.validateSpeed(req, res);
-    var duration = validator.validateDuration(req, res);
-    res.send('OK');
-    copterInstance.up(speed, duration);
-});
-
 app.get('/down/speed/:speed', function(req, res){
     var speed = validator.validateSpeed(req, res);
     res.send('OK');
     copterInstance.down(speed, 1000);
-});
-
-app.get('/down/speed/:speed/duration/:duration', function(req, res){
-    var speed = validator.validateSpeed(req, res);
-    var duration = validator.validateDuration(req, res);
-    res.send('OK');
-    copterInstance.down(speed, duration);
 });
 
 app.get('/left/speed/:speed', function(req, res){
@@ -68,24 +54,10 @@ app.get('/left/speed/:speed', function(req, res){
     copterInstance.left(speed, 1000);
 });
 
-app.get('/left/speed/:speed/duration/:duration', function(req, res){
-    var speed = validator.validateSpeed(req, res);
-    var duration = validator.validateDuration(req, res);
-    res.send('OK');
-    copterInstance.left(speed, duration);
-});
-
 app.get('/right/speed/:speed', function(req, res){
     var speed = validator.validateSpeed(req, res);
     res.send('OK');
     copterInstance.right(speed, 1000);
-});
-
-app.get('/right/speed/:speed/duration/:duration', function(req, res){
-    var speed = validator.validateSpeed(req, res);
-    var duration = validator.validateDuration(req, res);
-    res.send('OK');
-    copterInstance.right(speed, duration);
 });
 
 app.get('/front/speed/:speed', function(req, res){
@@ -94,26 +66,11 @@ app.get('/front/speed/:speed', function(req, res){
     copterInstance.front(speed, 1000);
 });
 
-app.get('/front/speed/:speed/duration/:duration', function(req, res){
-    var speed = validator.validateSpeed(req, res);
-    var duration = validator.validateDuration(req, res);
-    res.send('OK');
-    copterInstance.front(speed, duration);
-});
-
 app.get('/back/speed/:speed', function(req, res){
     var speed = validator.validateSpeed(req, res);
     res.send('OK');
     copterInstance.back(speed, 1000);
 });
-
-app.get('/back/speed/:speed/duration/:duration', function(req, res){
-    var speed = validator.validateSpeed(req, res);
-    var duration = validator.validateDuration(req, res);
-    res.send('OK');
-    copterInstance.back(speed, duration);
-});
-
 
 // Special Moves
 app.get('/crane', function(req, res){
@@ -131,21 +88,6 @@ app.get('/turn/direction/:direction/speed/:speed', function(req, res){
     var speed = validator.validateSpeed(req, res);
     res.send('OK');
     copterInstance.turnAround(direction, speed);
-});
-
-//app.get('/turn/direction/:direction/angle/:angle', function(req, res){
-//    var direction = validator.validateDirection(req, res);
-//    var angle = validator.validateAngle(req, res);
-//    res.send('OK');
-//    copterInstance.turn(direction, angle, 1);
-//});
-
-app.get('/turn/direction/:direction/angle/:angle/altitude/:altitude', function(req, res){
-    var direction = validator.validateDirection(req, res);
-    var angle = validator.validateAngle(req, res);
-    var altitude = validator.validateAltitude(req, res);
-    res.send('OK');
-    copterInstance.turn(direction, angle, altitude);
 });
 
 app.get('/animate/:animation/duration/:duration', function(req, res){
