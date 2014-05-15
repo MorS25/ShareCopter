@@ -28,5 +28,6 @@ module.exports = {
 
      duration: milliseconds
      */
-    animate: function(animation, duration){}
+    animate: function(animation, duration){},
+    altitude: function(height) {}
 };

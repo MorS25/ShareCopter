@@ -261,6 +261,18 @@ CopterApplication.NodeCopter.prototype = {
     animate: function(animation, duration) {
         console.log("animate " + animation + ", " + duration + " ms");
         this.client.animate(animation, duration);
+    },
+
+    altitude: function(height) {
+        if(this.isInitialized === false){
+            this.init();
+        } else {
+            this.createMission(this.client);
+        }
+
+        console.log("altitude " + height + " m");
+
+        this.mission.altitude(height);
     }
 };
 

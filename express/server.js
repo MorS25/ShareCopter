@@ -29,6 +29,11 @@ app.get('/stop', function(req, res){
     copterInstance.stop();
 });
 
+app.get('/altitude/:altitude', function(req, res){
+    var height = validator.validateAltitude(req, res);
+    res.send('OK');
+    copterInstance.altitude(height);
+});
 
 // Standard Moves
 app.get('/up/speed/:speed', function(req, res){

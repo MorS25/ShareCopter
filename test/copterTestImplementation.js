@@ -56,6 +56,9 @@ CopterApplication.NodeCopter.prototype = {
     },
     animate: function(animation, duration) {
         console.log("animate " + animation + ", " + duration + " ms");
+    },
+    altitude: function(height) {
+        console.log("altitude " + height + " m");
     }
 };
 
