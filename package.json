@@ -35,7 +35,8 @@
       "ar-drone": "~0.2.1",
       "voxel-drone": "https://github.com/shama/voxel-drone/tarball/master",
       "express": "4.2.0",
-      "requirejs": "2.1.11"
+      "requirejs": "2.1.11",
+      "ardrone-autonomy": "0.1.2"
   },
   "devDependencies": {
     "grunt-contrib-jshint": "~0.6.4",
