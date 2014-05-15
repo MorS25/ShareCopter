@@ -111,6 +111,18 @@ angular.module('myApp.controllers', [])
 
         $scope.getCurrentImageURL = function() {
             return $scope.currentImageURL
-        }
+        };
 
+        $scope.getVideoStream = function() {
+
+            if (typeof $scope.droneStream === 'undefined') {
+                console.log("configuring drone stream");
+                var options = { hostname: 'localhost', port: 3000 };
+                var droneDiv = document.getElementById("droneStream");
+                var droneStream = new NodecopterStream(droneDiv, options);
+                $scope.droneStream = droneStream;
+            }
+
+            return $scope.droneStream;
+        };
   }]);
