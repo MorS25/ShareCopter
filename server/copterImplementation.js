@@ -100,81 +100,27 @@ CopterApplication.NodeCopter.prototype = {
     },
     up: function(speed, duration){
         console.log("up " + speed + ", duration " + duration);
-
-        if(this.isInitialized === false){
-            this.init();
-        } else {
-            this.createMission(this.client);
-        }
-
-        var client = this.client;
-        this.mission
-            .task(function() {
-                client.up(speed);
-            })
-            .wait(duration)
-            .hover(100);
-
-        this.startMission();
+        this.client.up(speed);
     },
     down: function(speed, duration){
         console.log("down " + speed + ", duration " + duration);
-
-        if(this.isInitialized === false){
-            this.init();
-        } else {
-            this.createMission(this.client);
-        }
-
-        var client = this.client;
-        this.mission
-            .task(function() {
-                client.down(speed);
-            })
-            .wait(duration)
-            .hover(100);
-
-        this.startMission();
+        this.client.down(speed);
     },
     front: function(speed, duration){
         console.log("front " + speed + ", duration " + duration);
-        this.client
-            .after(100, function() {
-                this.front(speed);
-            })
-            .after(duration, function() {
-                this.stop();
-            });
+        this.client.front(speed);
     },
     back: function(speed, duration){
         console.log("back " + speed + ", duration " + duration);
-        this.client
-            .after(100, function() {
-                this.back(speed);
-            })
-            .after(duration, function() {
-                this.stop();
-            });
+        this.client.back(speed);
     },
     left: function(speed, duration){
         console.log("left " + speed + ", duration " + duration);
-        this.client
-            .after(100, function() {
-                this.left(speed);
-            })
-            .after(duration, function() {
-                this.stop();
-            });
+        this.client.left(speed);
     },
     right: function(speed, duration){
         console.log("right " + speed + ", duration " + duration);
-        this.client
-            .after(100, function() {
-                this.right(speed);
-            })
-            .after(duration, function() {
-                this.stop();
-            });
+        this.client.right(speed);
     },
     stop: function(){
         console.log("stop");
