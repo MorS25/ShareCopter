@@ -107,10 +107,22 @@ angular.module('myApp.controllers', [])
         $scope.getLastPNG = function() {
             //simulate a new URL to avoid browser cache
             $scope.currentImageURL = "http://localhost:8080/" + "?rdm=" + Date.now();
+            LogService.informUser("Update image command sent");
         };
 
         $scope.getCurrentImageURL = function() {
             return $scope.currentImageURL
-        }
+        };
 
+        $scope.getVideoStream = function() {
+            if (typeof $scope.droneStream === 'undefined') {
+                console.log("configuring drone stream");
+                var options = { hostname: 'localhost', port: 3000 };
+                var droneDiv = document.getElementById("droneStream");
+                var droneStream = new NodecopterStream(droneDiv, options);
+                $scope.droneStream = droneStream;
+            }
+
+            return $scope.droneStream;
+        };
   }]);
