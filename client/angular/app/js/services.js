@@ -23,98 +23,63 @@ appServices.service('LogService', [function () {
 }]);
 
 appServices.service('DroneService', ['$http', 'LogService', function ($http, LogService) {
-
     var baseAddress = "http://localhost:3000/";
 
     this.takeOff = function () {
-        $http.get(baseAddress + 'takeoff')
-            .success(function () {
-                LogService.informUser('Took off');
-            })
-            .error(function (data) {
-                LogService.informUser('failed take off');
-            });
+        var url = 'takeoff';
+        executeAction(url, 'Took off','Failed to take off');
     };
 
     this.land = function () {
-        $http.get(baseAddress + 'land')
-            .success(function () {
-                LogService.informUser('Landed');
-            })
-            .error(function (data) {
-                LogService.informUser('failed to  land');
-            });
+        var url = 'land';
+        executeAction(url, 'Landed','Failed to land');
     };
 
     this.stop = function () {
-        $http.get(baseAddress + 'stop')
-            .success(function () {
-                LogService.informUser('Stopped');
-            })
-            .error(function (data) {
-                LogService.informUser('Failed to stop (boom)');
-            });
+        var url = 'stop';
+        executeAction(url, 'Stopped','Failed to stop (boom)');
     };
 
     this.turnAround = function(direction, angle) {
-        $http.get(baseAddress + 'turn/direction/' + direction + '/angle/' + angle)
-            .success(function () {
-                localSuccessCallBack('Turned ' + direction + ' with ' + angle);
-            })
-            .error(function (data) {
-                localErrorCallBack('Failed to turn '+ direction);
-            });
+        var url = 'turn/direction/{0}/angle/{1}'.format(direction, angle);
+        executeAction(url, 'Turned ' + direction + ' with ' + angle, 'Failed to turn '+ direction);
     };
 
     this.move = function(direction, speed) {
-        var url = baseAddress + '{0}/speed/{1}';
+        var url = '{0}/speed/{1}';
         switch(direction) {
             case "up"       : url = url.format("up", speed);
-                              break;
+                break;
             case "down"     : url = url.format("down", speed);
-                              break;
+                break;
             case "forward"  : url = url.format("front", speed);
-                              break;
+                break;
             case "backward" : url = url.format("back", speed);
-                              break;
+                break;
             case "left"     : url = url.format("left", speed);
-                              break;
+                break;
             case "right"    : url = url.format("right", speed);
-                              break;
+                break;
             default         : localErrorCallBack("Will not move because of invalid parameter: " + direction)
-                              return;
+                return;
         };
 
-        $http.get(url)
-            .success(function () {
-                LogService.informUser('Moved ' + direction + ' with ' + speed);
-            })
-            .error(function (data) {
-                LogService.informUser('Failed to move ' + direction);
-            });
+        executeAction(url, 'Moved ' + direction + ' with ' + speed, 'Failed to move ' + direction);
     };
 
     this.doPredefinedMovement = function(command, duration) {
-        var url = baseAddress + 'animate/{0}/duration/{1}';
-        url = url.format(command, duration);
-        $http.get(url)
-            .success(function () {
-                localSuccessCallBack('Succeeded animation ' + command+ ' with ' + duration);
-            })
-            .error(function (data) {
-                localErrorCallBack('Failed animation '+ command);
-            });
-
+        var url = 'animate/{0}/duration/{1}'.format(command, duration);
+        executeAction(url, 'Succeeded animation ' + command+ ' with ' + duration, 'Failed animation '+ command);
     };
 
-    this.right = function (speed) {
-        $http.get(baseAddress + 'right/speed/' + speed)
+    function executeAction(relativeUrl, successMessage, errorMessage) {
+        var absoluteUrl = '{0}{1}'.format(baseAddress, relativeUrl);
+        $http.get(absoluteUrl)
             .success(function () {
-                LogService.informUser('Gone right down with ' + speed);
+                localSuccessCallBack(successMessage);
             })
             .error(function (data) {
-                LogService.informUser('Failed to go right');
+                localErrorCallBack(errorMessage);
             });
-    };
-
+    }
 }]);
