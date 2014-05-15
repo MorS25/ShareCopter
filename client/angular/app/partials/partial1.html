@@ -8,13 +8,10 @@
                 <button type="button" class="btn">Save</button>
                 <button type="button" class="btn">Clear</button>
             </div>
-            <div>
-                TODO
+            <div class="video">
+                <button type="button" class="btn wide-button" ng-click="getVideoStream()">Show video stream</button>
+                <div id="droneStream">video stream placeholder</div>
             </div>
-        </div>
-        <div class="video">
-            <button type="button" class="btn" ng-click="getVideoStream()">Show video stream</button>
-            <div id="droneStream" style="width: 640px; height: 360px">video stream placeholder</div>
         </div>
     </div>
     <div id="cockpit">
@@ -56,6 +53,4 @@
             </li>
         </ul>
     </div>
-
-
 </div>
