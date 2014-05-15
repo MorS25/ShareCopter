@@ -37,7 +37,8 @@
     "requirejs": "2.1.11",
     "tic": "~0.2.1",
     "voxel-camera": "~0.1.1",
-    "voxel-drone": "https://github.com/shama/voxel-drone/tarball/master"
+    "voxel-drone": "https://github.com/shama/voxel-drone/tarball/master",
+    "dronestream": "^1.1.1"
   },
   "devDependencies": {
     "grunt-contrib-jshint": "~0.6.4",
