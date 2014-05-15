@@ -25,8 +25,6 @@ appServices.service('LogService', [function () {
 appServices.service('DroneService', ['$http', 'LogService', function ($http, LogService) {
 
     var baseAddress = "http://localhost:3000/";
-    var localSuccessCallBack = function(){};
-    var localErrorCallBack = function() {};
 
     this.takeOff = function () {
         $http.get(baseAddress + 'takeoff')
@@ -107,5 +105,17 @@ appServices.service('DroneService', ['$http', 'LogService', function ($http, Log
             .error(function (data) {
                 localErrorCallBack('Failed animation '+ command);
             });
-    }
+
+    };
+
+    this.right = function (speed) {
+        $http.get(baseAddress + 'right/speed/' + speed)
+            .success(function () {
+                LogService.informUser('Gone right down with ' + speed);
+            })
+            .error(function (data) {
+                LogService.informUser('Failed to go right');
+            });
+    };
+
 }]);

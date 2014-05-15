@@ -8,6 +8,13 @@
             ng-model="horizontalSpeed" ng-change="horizontalChange()"/>
     </div>
     <div>
+        <!-- Image Panel -->
+        <button type="button" class="btn" ng-click="getLastPNG()">Update image</button>
+        <div>
+            <img alt="last PNG from drone" ng-src="{{ getCurrentImageURL() }}" >
+        </div>
+    </div>
+    <div>
         <!-- Video Panel -->
     </div>
     <div class="btn-group">

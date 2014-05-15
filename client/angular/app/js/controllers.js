@@ -97,4 +97,14 @@ angular.module('myApp.controllers', [])
         $scope.getCommands = function() {
             return LogService.getCommands();
         };
+
+        $scope.getLastPNG = function() {
+            //simulate a new URL to avoid browser cache
+            $scope.currentImageURL = "http://localhost:8080/" + "?rdm=" + Date.now();
+        };
+
+        $scope.getCurrentImageURL = function() {
+            return $scope.currentImageURL
+        }
+
   }]);
