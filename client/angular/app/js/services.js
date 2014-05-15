@@ -60,7 +60,7 @@ appServices.service('DroneService', ['$http', 'LogService', function ($http, Log
                               break;
             case "right"    : url = url.format("right", speed);
                               break;
-            default         : localErrorCallBack("Will not move because of invalid parameter: " + direction)
+            default         : LogService.informUser("Will not move because of invalid parameter: " + direction);
                               return;
         };
 
@@ -76,10 +76,10 @@ appServices.service('DroneService', ['$http', 'LogService', function ($http, Log
         var absoluteUrl = '{0}{1}'.format(baseAddress, relativeUrl);
         $http.get(absoluteUrl)
             .success(function () {
-                localSuccessCallBack(successMessage);
+                LogService.informUser(successMessage);
             })
             .error(function (data) {
-                localErrorCallBack(errorMessage);
+                LogService.informUser(errorMessage);
             });
     }
-}]);
+}]);;
