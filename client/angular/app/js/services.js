@@ -99,7 +99,6 @@ appServices.service('DroneService', ['$http', 'LogService', function ($http, Log
     this.doPredefinedMovement = function(command, duration) {
         var url = baseAddress + 'animate/{0}/duration/{1}';
         url = url.format(command, duration);
-        console.log(url);
         $http.get(url)
             .success(function () {
                 localSuccessCallBack('Succeeded animation ' + command+ ' with ' + duration);

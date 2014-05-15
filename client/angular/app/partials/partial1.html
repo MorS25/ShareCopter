@@ -1,26 +1,34 @@
 <div ng-controller="MyCtrl1" id="control-panel">
-    <div>
-        <!-- Z Axis Control Panel -->
-        <input type="range" min="0" max="200"
-            ng-model="verticalSpeed" ng-change="verticalChange()"
-            class="vertical"/>
-        <input type="range" min="0" max="200"
-            ng-model="horizontalSpeed" ng-change="horizontalChange()"/>
-    </div>
-    <div>
-        <!-- Video Panel -->
-    </div>
-    <div class="btn-group">
-        <label class="btn btn-success" ng-model="radioModel" ng-click="takeOff()"  uncheckable>Take off</label>
-        <label class="btn btn-danger" ng-model="radioModel" ng-click="stop()" uncheckable>Stop</label>
-        <label class="btn btn-success" ng-model="radioModel" ng-click="land()" uncheckable>Land</label>
-    </div>
-    <div>
-        <!-- X/Y Axis Control Panel -->
-        <input type="button" value="Left" ng-mousedown="leftMouseDown()" ng-mouseup="stop()">
-        <input type="button" value="Right" ng-mousedown="rightMouseDown()" ng-mouseup="stop()">
-        <input type="button" value="Forward" ng-mousedown="forwardMouseDown()" ng-mouseup="stop()">
-        <input type="button" value="Backward" ng-mousedown="backwardMouseDown()" ng-mouseup="stop()">
+    <div id="cockpit">
+        <div id="slider-control">
+            <!-- Z Axis Control Panel -->
+            <input type="range" min="0" max="200"
+                   ng-model="verticalSpeed" ng-change="verticalChange()"
+                   class="vertical"/>
+            <input type="range" min="0" max="200"
+                   ng-model="horizontalSpeed" ng-change="horizontalChange()"
+                    class="slider-control"/>
+        </div>
+        <div>
+            <!-- Video Panel -->
+        </div>
+        <div id="axis-control">
+            <!-- X/Y Axis Control Panel -->
+            <input type="button" id="btnLeft" value="Left" ng-mousedown="leftMouseDown()" ng-mouseup="stop()"/>
+            <input type="button" id="btnRight" value="Right" ng-mousedown="rightMouseDown()" ng-mouseup="stop()"/>
+            <input type="button" id="btnForward" value="Forward" ng-mousedown="forwardMouseDown()" ng-mouseup="stop()"/>
+            <input type="button" id="btnBackward" value="Backward" ng-mousedown="backwardMouseDown()" ng-mouseup="stop()"/>
+            <div class="btn-group">
+                <label class="btn btn-success" ng-model="radioModel" btn-radio="'takeOff'" ng-click="takeOff()" uncheckable >Take off</label>
+                <label class="btn btn-danger"  ng-model="radioModel" btn-radio="'stop'" ng-click="stop()" uncheckable>Stop</label>
+                <label class="btn btn-success" ng-model="radioModel" btn-radio="'land'" ng-click="land()" uncheckable>Land</label>
+            </div>
+        </div>
+        <div id="special-command">
+            <select ng-model="selectedMovement" ng-options="movement.name for movement in movements">
+            </select>
+            <input type="button" value="Do it!" ng-click="doMovement()"/>
+        </div>
     </div>
     <div id="console">
         <!-- Protocol Panel -->
@@ -28,13 +36,6 @@
             <li ng-repeat="protocolEntry in getCommands()">
                 <pre>{{protocolEntry.date | date : 'h:mm:ss'}} - {{ protocolEntry.entry || 'null'}}</pre>
             </li>
-         </ul>
-    </div>
-
-    <div id="special-command">
-        <select ng-model="selectedMovement" ng-options="movement.name for movement in movements">
-            <option value="">--Choose Movement--</option>
-        </select>
-        <input type="button" value="Do it!" ng-click="doMovement()"/>
+        </ul>
     </div>
 </div>
