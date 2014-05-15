@@ -116,7 +116,7 @@ angular.module('myApp.controllers', [])
 
         $scope.getVideoStream = function() {
             if (typeof $scope.droneStream === 'undefined') {
-                console.log("configuring drone stream");
+                LogService.informUser("Initializing video stream");
                 var options = { hostname: 'localhost', port: 3000 };
                 var droneDiv = document.getElementById("droneStream");
                 var droneStream = new NodecopterStream(droneDiv, options);
