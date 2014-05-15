@@ -40,12 +40,13 @@ exports['copter'] = {
       test.equal(copterInstance.takeOffCalled, true);
       test.done();
   },
-  'turnAround': function(test) {
-      test.expect(2);
-      copterInstance.turnAround('right', 0.5);
-      var calledParams = copterInstance.turnAroundCalledWith;
+  'turn': function(test) {
+      test.expect(3);
+      copterInstance.turn('right', 90, 1.0);
+      var calledParams = copterInstance.turnCalledWith;
       test.equal(calledParams.direction, 'right');
-      test.equal(calledParams.speed, 0.5);
+      test.equal(calledParams.angle, 90);
+      test.equal(calledParams.altitude, 1.0);
       test.done();
     }
 };

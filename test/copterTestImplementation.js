@@ -6,7 +6,7 @@ CopterApplication.NodeCopter = function(){
 
     this.takeOffCalled = false;
     this.landCalled = false;
-    this.turnAroundCalledWith = undefined;
+    this.turnCalledWith = undefined;
 
     var copterInterface = require('../server/copterInterface');
     this.prototype = Object.create(copterInterface);
@@ -22,10 +22,6 @@ CopterApplication.NodeCopter.prototype = {
     land : function(){
         console.log("land");
         this.landCalled = true;
-    },
-    turnAround : function(direction, speed){
-        console.log("turnAround " + direction + ", " + speed);
-        this.turnAroundCalledWith = {direction: direction, speed: speed};
     },
     up: function(speed, duration){
         console.log("up " + speed);
@@ -53,6 +49,10 @@ CopterApplication.NodeCopter.prototype = {
     },
     square: function(){
         console.log("square");
+    },
+    turn : function(direction, angle, altitude){
+        console.log("turn " + direction + ", " + angle + ", " + altitude);
+        this.turnCalledWith = {direction: direction, angle: angle, altitude: altitude};
     },
     animate: function(animation, duration) {
         console.log("animate " + animation + ", " + duration + " ms");
