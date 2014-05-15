@@ -98,28 +98,28 @@ CopterApplication.NodeCopter.prototype = {
         console.log("land");
         this.client.land();
     },
-    up: function(speed, duration){
-        console.log("up " + speed + ", duration " + duration);
+    up: function(speed){
+        console.log("up " + speed);
         this.client.up(speed);
     },
-    down: function(speed, duration){
-        console.log("down " + speed + ", duration " + duration);
+    down: function(speed){
+        console.log("down " + speed);
         this.client.down(speed);
     },
-    front: function(speed, duration){
-        console.log("front " + speed + ", duration " + duration);
+    front: function(speed){
+        console.log("front " + speed);
         this.client.front(speed);
     },
-    back: function(speed, duration){
-        console.log("back " + speed + ", duration " + duration);
+    back: function(speed){
+        console.log("back " + speed);
         this.client.back(speed);
     },
-    left: function(speed, duration){
-        console.log("left " + speed + ", duration " + duration);
+    left: function(speed){
+        console.log("left " + speed);
         this.client.left(speed);
     },
-    right: function(speed, duration){
-        console.log("right " + speed + ", duration " + duration);
+    right: function(speed){
+        console.log("right " + speed);
         this.client.right(speed);
     },
     stop: function(){

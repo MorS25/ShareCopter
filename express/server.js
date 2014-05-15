@@ -39,37 +39,37 @@ app.get('/altitude/:altitude', function(req, res){
 app.get('/up/speed/:speed', function(req, res){
     var speed = validator.validateSpeed(req, res);
     res.send('OK');
-    copterInstance.up(speed, 1000);
+    copterInstance.up(speed);
 });
 
 app.get('/down/speed/:speed', function(req, res){
     var speed = validator.validateSpeed(req, res);
     res.send('OK');
-    copterInstance.down(speed, 1000);
+    copterInstance.down(speed);
 });
 
 app.get('/left/speed/:speed', function(req, res){
     var speed = validator.validateSpeed(req, res);
     res.send('OK');
-    copterInstance.left(speed, 1000);
+    copterInstance.left(speed);
 });
 
 app.get('/right/speed/:speed', function(req, res){
     var speed = validator.validateSpeed(req, res);
     res.send('OK');
-    copterInstance.right(speed, 1000);
+    copterInstance.right(speed);
 });
 
 app.get('/front/speed/:speed', function(req, res){
     var speed = validator.validateSpeed(req, res);
     res.send('OK');
-    copterInstance.front(speed, 1000);
+    copterInstance.front(speed);
 });
 
 app.get('/back/speed/:speed', function(req, res){
     var speed = validator.validateSpeed(req, res);
     res.send('OK');
-    copterInstance.back(speed, 1000);
+    copterInstance.back(speed);
 });
 
 // Special Moves
