@@ -98,111 +98,41 @@ CopterApplication.NodeCopter.prototype = {
         console.log("land");
         this.client.land();
     },
-    up: function(speed, duration){
-        console.log("up " + speed + ", duration " + duration);
-
-        if(this.isInitialized === false){
-            this.init();
-        } else {
-            this.createMission(this.client);
-        }
-
-        var client = this.client;
-        this.mission
-            .task(function() {
-                client.up(speed);
-            })
-            .wait(duration)
-            .hover(100);
-
-        this.startMission();
+    up: function(speed){
+        console.log("up " + speed);
+        this.client.up(speed);
     },
-    down: function(speed, duration){
-        console.log("down " + speed + ", duration " + duration);
-
-        if(this.isInitialized === false){
-            this.init();
-        } else {
-            this.createMission(this.client);
-        }
-
-        var client = this.client;
-        this.mission
-            .task(function() {
-                client.down(speed);
-            })
-            .wait(duration)
-            .hover(100);
-
-        this.startMission();
+    down: function(speed){
+        console.log("down " + speed);
+        this.client.down(speed);
     },
-    front: function(speed, duration){
-        console.log("front " + speed + ", duration " + duration);
-        this.client
-            .after(100, function() {
-                this.front(speed);
-            })
-            .after(duration, function() {
-                this.stop();
-            });
+    front: function(speed){
+        console.log("front " + speed);
+        this.client.front(speed);
     },
-    back: function(speed, duration){
-        console.log("back " + speed + ", duration " + duration);
-        this.client
-            .after(100, function() {
-                this.back(speed);
-            })
-            .after(duration, function() {
-                this.stop();
-            });
+    back: function(speed){
+        console.log("back " + speed);
+        this.client.back(speed);
     },
-    left: function(speed, duration){
-        console.log("left " + speed + ", duration " + duration);
-        this.client
-            .after(100, function() {
-                this.left(speed);
-            })
-            .after(duration, function() {
-                this.stop();
-            });
+    left: function(speed){
+        console.log("left " + speed);
+        this.client.left(speed);
     },
-    right: function(speed, duration){
-        console.log("right " + speed + ", duration " + duration);
-        this.client
-            .after(100, function() {
-                this.right(speed);
-            })
-            .after(duration, function() {
-                this.stop();
-            });
+    right: function(speed){
+        console.log("right " + speed);
+        this.client.right(speed);
     },
     stop: function(){
         console.log("stop");
         this.client.stop();
     },
-    turn : function(direction, angle, altitude) {
-
-        console.log(new Date().toLocaleTimeString() + " : Configuring turn move...");
-        console.log(new Date().toLocaleTimeString() + " : direction: '" + direction + "', angle: '" + angle + "', altitude: '" + altitude + "'");
-
-        if(this.isInitialized === false){
-            this.init();
-        } else {
-            this.createMission(this.client);
-        }
-
-        this.mission
-            .hover(500)
-            .go({x:0, y:0})
-            .altitude(altitude);
-
+    turnAround: function(direction, speed) {
+        console.log("turn " + direction + " with speed " + speed);
         if(direction === 'left') {
-            this.mission.ccw(angle);
+            this.client.counterClockwise(speed);
         } else {
-            this.mission.cw(angle);
+            this.client.clockwise(speed);
         }
-
-        this.startMission();
     },
     crane : function() {
 
@@ -273,6 +203,8 @@ CopterApplication.NodeCopter.prototype = {
         console.log("altitude " + height + " m");
 
         this.mission.altitude(height);
+
+        this.startMission();
     }
 };
 

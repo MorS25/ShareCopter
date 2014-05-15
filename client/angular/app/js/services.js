@@ -40,28 +40,28 @@ appServices.service('DroneService', ['$http', 'LogService', function ($http, Log
         executeAction(url, 'Stopped','Failed to stop (boom)');
     };
 
-    this.turnAround = function(direction, angle) {
-        var url = 'turn/direction/{0}/angle/{1}'.format(direction, angle);
-        executeAction(url, 'Turned ' + direction + ' with ' + angle, 'Failed to turn '+ direction);
+    this.turnAround = function(direction, speed) {
+        var url = 'turn/direction/{0}/speed/{1}'.format(direction, speed);
+        executeAction(url, 'Turned ' + direction + ' with speed ' + speed, 'Failed to turn '+ direction);
     };
 
     this.move = function(direction, speed) {
         var url = '{0}/speed/{1}';
         switch(direction) {
             case "up"       : url = url.format("up", speed);
-                break;
+                              break;
             case "down"     : url = url.format("down", speed);
-                break;
+                              break;
             case "forward"  : url = url.format("front", speed);
-                break;
+                              break;
             case "backward" : url = url.format("back", speed);
-                break;
+                              break;
             case "left"     : url = url.format("left", speed);
-                break;
+                              break;
             case "right"    : url = url.format("right", speed);
-                break;
-            default         : localErrorCallBack("Will not move because of invalid parameter: " + direction)
-                return;
+                              break;
+            default         : LogService.informUser("Will not move because of invalid parameter: " + direction);
+                              return;
         };
 
         executeAction(url, 'Moved ' + direction + ' with ' + speed, 'Failed to move ' + direction);

@@ -73,12 +73,12 @@ angular.module('myApp.controllers', [])
 
         $scope.leftMouseDown = function () {
             LogService.informUser("Turn left command sent");
-            DroneService.turnAround("left", 90);
+            DroneService.turnAround("left", 0.6);
         };
 
         $scope.rightMouseDown = function () {
             LogService.informUser("Turn right command sent");
-            DroneService.turnAround("right", 90);
+            DroneService.turnAround("right", 0.6);
         };
 
         $scope.forwardMouseDown = function () {
@@ -122,4 +122,16 @@ angular.module('myApp.controllers', [])
             LogService.informUser("Update image command sent");
         };
 
+
+        $scope.getVideoStream = function() {
+            if (typeof $scope.droneStream === 'undefined') {
+                LogService.informUser("Initializing video stream");
+                var options = { hostname: 'localhost', port: 3000 };
+                var droneDiv = document.getElementById("droneStream");
+                var droneStream = new NodecopterStream(droneDiv, options);
+                $scope.droneStream = droneStream;
+            }
+
+            return $scope.droneStream;
+        };
   }]);
