@@ -107,10 +107,11 @@ angular.module('myApp.controllers', [])
         $scope.getLastPNG = function() {
             //simulate a new URL to avoid browser cache
             $scope.currentImageURL = "http://localhost:8080/" + "?rdm=" + Date.now();
+            LogService.informUser("Update image command sent");
         };
 
         $scope.getCurrentImageURL = function() {
-            return $scope.currentImageURL
+            return $scope.currentImageURL;
         }
 
   }]);

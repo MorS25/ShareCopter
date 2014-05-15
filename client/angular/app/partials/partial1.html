@@ -1,13 +1,17 @@
 <div ng-controller="MyCtrl1" id="control-panel">
-    <div>
+    <div id="image-control">
         <!-- Image Panel -->
-        <button type="button" class="btn" ng-click="getLastPNG()">Update image</button>
         <div>
-            <img alt="last PNG from drone" ng-src="{{ getCurrentImageURL() }}" >
+            <img class="last-update" alt="last PNG from drone" src="img/current-init.png" ng-src="{{ getCurrentImageURL() }}" >
+            <div>
+                <button type="button" class="btn" ng-click="getLastPNG()">Update</button>
+                <button type="button" class="btn">Save</button>
+                <button type="button" class="btn">Clear</button>
+            </div>
+            <div>
+                TODO
+            </div>
         </div>
-    </div>
-    <div>
-        <!-- Video Panel -->
     </div>
     <div id="cockpit">
         <div id="slider-control">

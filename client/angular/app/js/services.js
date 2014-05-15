@@ -49,19 +49,19 @@ appServices.service('DroneService', ['$http', 'LogService', function ($http, Log
         var url = '{0}/speed/{1}';
         switch(direction) {
             case "up"       : url = url.format("up", speed);
-                              break;
+                break;
             case "down"     : url = url.format("down", speed);
-                              break;
+                break;
             case "forward"  : url = url.format("front", speed);
-                              break;
+                break;
             case "backward" : url = url.format("back", speed);
-                              break;
+                break;
             case "left"     : url = url.format("left", speed);
-                              break;
+                break;
             case "right"    : url = url.format("right", speed);
-                              break;
+                break;
             default         : localErrorCallBack("Will not move because of invalid parameter: " + direction)
-                              return;
+                return;
         };
 
         executeAction(url, 'Moved ' + direction + ' with ' + speed, 'Failed to move ' + direction);
