@@ -73,12 +73,12 @@ angular.module('myApp.controllers', [])
 
         $scope.leftMouseDown = function () {
             LogService.informUser("Turn left command sent");
-            DroneService.turnAround("left", 360);
+            DroneService.turnAround("left", 0.1);
         };
 
         $scope.rightMouseDown = function () {
             LogService.informUser("Turn right command sent");
-            DroneService.turnAround("right", 360);
+            DroneService.turnAround("right", 0.1);
         };
 
         $scope.forwardMouseDown = function () {

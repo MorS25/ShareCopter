@@ -126,29 +126,13 @@ CopterApplication.NodeCopter.prototype = {
         console.log("stop");
         this.client.stop();
     },
-    turn : function(direction, angle, altitude) {
-
-        console.log(new Date().toLocaleTimeString() + " : Configuring turn move...");
-        console.log(new Date().toLocaleTimeString() + " : direction: '" + direction + "', angle: '" + angle + "', altitude: '" + altitude + "'");
-
-        if(this.isInitialized === false){
-            this.init();
-        } else {
-            this.createMission(this.client);
-        }
-
-        this.mission
-            .hover(500)
-            .go({x:0, y:0})
-            .altitude(altitude);
-
+    turnAround: function(direction, speed) {
+        console.log("turn " + direction + " with speed " + speed);
         if(direction === 'left') {
-            this.mission.ccw(angle);
+            this.client.counterClockwise(speed);
         } else {
-            this.mission.cw(angle);
+            this.client.clockwise(speed);
         }
-
-        this.startMission();
     },
     crane : function() {
 

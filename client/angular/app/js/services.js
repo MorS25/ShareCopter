@@ -40,9 +40,9 @@ appServices.service('DroneService', ['$http', 'LogService', function ($http, Log
         executeAction(url, 'Stopped','Failed to stop (boom)');
     };
 
-    this.turnAround = function(direction, angle) {
-        var url = 'turn/direction/{0}/angle/{1}'.format(direction, angle);
-        executeAction(url, 'Turned ' + direction + ' with ' + angle, 'Failed to turn '+ direction);
+    this.turnAround = function(direction, speed) {
+        var url = 'turn/direction/{0}/speed/{1}'.format(direction, speed);
+        executeAction(url, 'Turned ' + direction + ' with speed ' + speed, 'Failed to turn '+ direction);
     };
 
     this.move = function(direction, speed) {
