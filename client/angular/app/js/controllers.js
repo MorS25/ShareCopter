@@ -6,9 +6,10 @@ angular.module('myApp.controllers', [])
   .controller('MyCtrl1', ['$scope','LogService', 'DroneService', function($scope, LogService, DroneService) {
         $scope.verticalSpeed = 100;
         $scope.horizontalSpeed = 100;
+        $scope.radioModel = 'stop';
 
-        $scope.selectedMovement = {};
         $scope.movements = [
+            {name: '--> Select movement <--',   command: ''},
             {name: 'Wave',                      command: 'wave'},
             {name: 'PhiM 30 Deg',               command: 'phiM30Deg'},
             {name: 'Phi 30 Deg',                command: 'phi30Deg'},
@@ -28,6 +29,7 @@ angular.module('myApp.controllers', [])
             {name: 'Flip Behind',               command: 'flipBehind'},
             {name: 'Flip Right',                command: 'flipRight'}
         ];
+        $scope.selectedMovement = $scope.movements[0];
 
         $scope.takeOff = function(){
             LogService.informUser("Take off command sent");
@@ -35,7 +37,7 @@ angular.module('myApp.controllers', [])
         };
 
         $scope.land = function(){
-            LogService.informUser("Take off command sent");
+            LogService.informUser("Land command sent");
             DroneService.land();
         };
 
@@ -90,8 +92,12 @@ angular.module('myApp.controllers', [])
         };
 
         $scope.doMovement = function () {
+            if($scope.selectedMovement.command === '') {
+                return;
+            }
             LogService.informUser("Do movement command '"+ $scope.selectedMovement.command +"' sent");
             DroneService.doPredefinedMovement($scope.selectedMovement.command, 10000);
+            $scope.selectedMovement = $scope.movements[0];
         };
 
         $scope.getCommands = function() {

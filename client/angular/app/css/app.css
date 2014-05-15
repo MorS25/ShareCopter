@@ -66,16 +66,51 @@ input[type=range].vertical
     padding: 0 5px;
 }
 
-
-
-#joystick {
-    width: 300px;
-    height: 300px;
-    background-color: #ffff00;
+#cockpit{
+    float:left;
+    position: absolute;
 }
 
-#stick {
-    width:30px;
-    height: 30px;
-    background-color: blue;
+#console {
+    float:right;
+}
+
+#axis-control {
+    width: 300px;
+    height: 100px !important;
+    position: relative;
+}
+
+#btnForward {
+    position: absolute;
+    top: 0px;
+    left: 120px;
+}
+
+#btnLeft {
+    position: absolute;
+    top: 32px;
+    left: 0px;
+}
+
+#btnRight {
+    position: absolute;
+    top: 32px;
+    left: 270px;
+}
+
+#btnBackward {
+    position: absolute;
+    left: 115px;
+    top: 70px;
+}
+
+.btn-group {
+    position: absolute;
+    left: 50px;
+    top: 30px;
+}
+
+.btn {
+    width: 70px;
 }

@@ -29,6 +29,11 @@ app.get('/stop', function(req, res){
     copterInstance.stop();
 });
 
+app.get('/altitude/:altitude', function(req, res){
+    var height = validator.validateAltitude(req, res);
+    res.send('OK');
+    copterInstance.altitude(height);
+});
 
 // Standard Moves
 app.get('/up/speed/:speed', function(req, res){
@@ -143,8 +148,14 @@ app.get('/animate/:animation/duration/:duration', function(req, res){
     copterInstance.animate(animation, duration);
 });
 
+app.get('/video/', function(req, res){
+    require("fs").createReadStream(__dirname + "/videoStream.html").pipe(res);
+});
 
 // Callback
 var server = app.listen(3000, function() {
     console.log('Listening on port %d', server.address().port);
 });
+
+var droneStream = require("dronestream");
+droneStream.listen(server);
