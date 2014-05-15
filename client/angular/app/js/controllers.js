@@ -3,7 +3,7 @@
 /* Controllers */
 
 angular.module('myApp.controllers', [])
-  .controller('MyCtrl1', ['$scope','LogService', 'DroneService', function($scope, LogService, DroneService) {
+  .controller('MyCtrl1', ['$scope','LogService', 'DroneService', 'DroneImageService', function($scope, LogService, DroneService, DroneImageService) {
         $scope.verticalSpeed = 100;
         $scope.horizontalSpeed = 100;
         $scope.radioModel = 'stop';
@@ -104,15 +104,24 @@ angular.module('myApp.controllers', [])
             return LogService.getCommands();
         };
 
-        $scope.getLastPNG = function() {
-            //simulate a new URL to avoid browser cache
-            $scope.currentImageURL = "http://localhost:8080/" + "?rdm=" + Date.now();
+        $scope.save = function() {
+            LogService.informUser("Not implemented yet...");
+            //TODO: save $scope.currentImageBlob in the local storage and display a thumbnail
+        }
+
+        $scope.clear = function() {
+            LogService.informUser("Not implemented yet...");
+        }
+
+        $scope.getCurrentPNGFromDrone = function() {
+            DroneImageService.getNewImage(function(data) {
+                LogService.informUser("Updated image received");
+                $scope.currentImageBlob = data;
+                $scope.$apply();
+            });
             LogService.informUser("Update image command sent");
         };
 
-        $scope.getCurrentImageURL = function() {
-            return $scope.currentImageURL
-        };
 
         $scope.getVideoStream = function() {
             if (typeof $scope.droneStream === 'undefined') {

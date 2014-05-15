@@ -82,4 +82,39 @@ appServices.service('DroneService', ['$http', 'LogService', function ($http, Log
                 LogService.informUser(errorMessage);
             });
     }
-}]);;
+}]);
+
+appServices.service('DroneImageService', ['$http', 'LogService', function ($http, LogService) {
+    //var imageBaseAddress = "http://localhost:8080/";
+    var imageBaseAddress = "http://localhost:8000/app/img/test-drone.png"; //test URL
+
+    this.getNewImage = function (controllerCallback) {
+            var xhr = new XMLHttpRequest();
+            xhr.responseType = 'blob';
+            xhr.onloadend = function(e) {
+                if (this.status == 200) {
+                    var myBlob = this.response;
+                    // myBlob is now the blob that the object URL pointed to.
+                    // Only process image files.
+                    if (!myBlob.type.match('image.*')) {
+                        LogService.informUser('ERROR: angular did not receive an image');
+                        return;
+                    }
+
+                    var reader = new FileReader();
+                    // Closure to capture the file information.
+                    reader.onloadend = function() {
+                        controllerCallback(reader.result);
+                    }
+
+                    // Read in the image file as a data URL.
+                    reader.readAsDataURL(myBlob);
+                } else {
+                    LogService.informUser("ERROR: URL requested did not return 200");
+                    return;
+                }
+            };
+            xhr.open('GET', imageBaseAddress, true);
+            xhr.send();
+    }
+}]);
