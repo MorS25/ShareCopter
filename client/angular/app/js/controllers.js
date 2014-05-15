@@ -119,8 +119,7 @@ angular.module('myApp.controllers', [])
                 LogService.informUser("Initializing video stream");
                 var options = { hostname: 'localhost', port: 3000 };
                 var droneDiv = document.getElementById("droneStream");
-                var droneStream = new NodecopterStream(droneDiv, options);
-                $scope.droneStream = droneStream;
+                $scope.droneStream = new NodecopterStream(droneDiv, options);
             }
 
             return $scope.droneStream;
