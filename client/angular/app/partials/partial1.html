@@ -7,7 +7,9 @@
                 <button type="button" class="btn" ng-click="getCurrentPNGFromDrone()">Update</button>
                 <button type="button" class="btn" ng-click="save()">Save</button>
                 <button type="button" class="btn" ng-click="clear()">Clear</button>
-
+            </div>
+            <div class="saved-images">
+                <a ng-click="setImageAsMain()"><img ng-src="{{ savedImage }}" /></a>
             </div>
             <div class="video">
                 <button type="button" class="btn wide-button" ng-click="getVideoStream()">Show video stream</button>

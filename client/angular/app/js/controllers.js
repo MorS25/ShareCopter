@@ -3,10 +3,11 @@
 /* Controllers */
 
 angular.module('myApp.controllers', [])
-  .controller('MyCtrl1', ['$scope','LogService', 'DroneService', 'DroneImageService', function($scope, LogService, DroneService, DroneImageService) {
+  .controller('MyCtrl1', ['$scope', 'LogService', 'DroneService', 'DroneImageService', 'LocalStorageService', function($scope, LogService, DroneService, DroneImageService, LocalStorageService) {
         $scope.verticalSpeed = 100;
         $scope.horizontalSpeed = 100;
         $scope.radioModel = 'stop';
+        $scope.savedImage = LocalStorageService.get('image');
 
         $scope.movements = [
             {name: '--> Select movement <--',   command: ''},
@@ -105,12 +106,16 @@ angular.module('myApp.controllers', [])
         };
 
         $scope.save = function() {
-            LogService.informUser("Not implemented yet...");
-            //TODO: save $scope.currentImageBlob in the local storage and display a thumbnail
+            LocalStorageService.set('image', $scope.currentImageBlob);
+            $scope.savedImage = $scope.currentImageBlob;
+            LogService.informUser('Image saved in local storage');
         }
 
         $scope.clear = function() {
-            LogService.informUser("Not implemented yet...");
+            LocalStorageService.clearAll();
+            $scope.currentImageBlob = 'img/current-init.png';
+            $scope.$apply();
+            LogService.informUser('Local storage cleared');
         }
 
         $scope.getCurrentPNGFromDrone = function() {
@@ -122,7 +127,6 @@ angular.module('myApp.controllers', [])
             LogService.informUser("Update image command sent");
         };
 
-
         $scope.getVideoStream = function() {
             if (typeof $scope.droneStream === 'undefined') {
                 LogService.informUser("Initializing video stream");
@@ -133,4 +137,8 @@ angular.module('myApp.controllers', [])
 
             return $scope.droneStream;
         };
+
+        $scope.setImageAsMain = function() {
+            $scope.currentImageBlob = $scope.savedImage;
+        }
   }]);

@@ -118,3 +118,61 @@ appServices.service('DroneImageService', ['$http', 'LogService', function ($http
             xhr.send();
     }
 }]);
+
+appServices.service('LocalStorageService', ['$window', 'LogService', function ($window, LogService) {
+
+    var storage = (typeof $window.localStorage === 'undefined') ? undefined : $window.localStorage;
+    var supported = typeof storage !== 'undefined';
+
+    this.set = function (key, value) {
+        if (!supported) {
+            try {
+                $cookieStore.put(key, value);
+                return value;
+            } catch(e) {
+                LogService.informUser('Local Storage not supported');
+                console.log('Local Storage not supported, make sure you have angular-cookies enabled.');
+            }
+        }
+        var saver = angular.toJson(value);
+        storage.setItem(key, saver);
+        return parseValue(saver);
+    };
+
+    this.get = function (key) {
+        if (!supported) {
+            LogService.informUser('Local Storage not supported');
+            return null;
+        }
+        var item = storage.getItem(key);
+        return parseValue(item);
+    };
+
+
+    this.clearAll = function () {
+        storage.clear();
+    };
+
+    function parseValue(res) {
+        var val;
+        try {
+            val = angular.fromJson(res);
+            if (typeof val === 'undefined') {
+                val = res;
+            }
+            if (val === 'true') {
+                val = true;
+            }
+            if (val === 'false') {
+                val = false;
+            }
+            if ($window.parseFloat(val) === val && !angular.isObject(val)) {
+                val = $window.parseFloat(val);
+            }
+        } catch (e) {
+            val = res;
+        }
+        return val;
+    }
+
+}]);
