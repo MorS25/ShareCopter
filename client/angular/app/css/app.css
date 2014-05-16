@@ -29,6 +29,117 @@
   padding: 0;
 }
 
+#control-panel {
+    padding: 10px;
+}
+
+.slider-control {
+    width: 300px !important;
+}
+
 #protocol-listing {
-    width: 500px;
+    width: 300px;
+    padding: 0;
+}
+
+#protocol-listing pre {
+    padding: 3px;
+}
+
+#cockpit{
+    float:left;
+    position: absolute;
+}
+
+#console {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 310px;
+    height: 100%;
+    background-color: #f5f5f5;
+    border-left: 1px solid #353535;
+    padding: 5px;
+    float:right;
+}
+
+#image-control {
+    position: fixed;
+    top: 0;
+    right: 310px;
+    width: 410px;
+    height: 100%;
+    background-color: #f5f5f5;
+    border-left: 1px solid #353535;
+    padding: 5px;
+}
+
+.last-update {
+    width: 300px;
+    margin-bottom: 5px;
+}
+
+.saved-images img {
+    width: 100px;
+}
+
+input[type=range].vertical
+{
+    writing-mode: bt-lr; /* IE */
+    -webkit-appearance: slider-vertical; /* WebKit */
+    width: 8px;
+    height: 300px;
+    padding: 0 5px;
+}
+
+#axis-control {
+    width: 300px;
+    height: 130px !important;
+    position: relative;
+}
+
+#btnForward {
+    position: absolute;
+    top: 0px;
+    left: 210px;
+}
+
+#btnLeft {
+    position: absolute;
+    top: 40px;
+    left: 0px;
+}
+
+#btnRight {
+    position: absolute;
+    top: 40px;
+    left: 420px;
+}
+
+#btnBackward {
+    position: absolute;
+    left: 210px;
+    top: 80px;
+}
+
+.btn-group {
+    position: absolute;
+    left: 110px;
+    top: 40px;
+}
+
+.btn {
+    width: 100px;
+ }
+
+.wide-button {
+    width: 140px;
+}
+
+.video {
+    margin-top: 5px;
+}
+
+#droneStream > canvas {
+    width: 400px;
 }

@@ -1,24 +1,55 @@
-<div ng-controller="MyCtrl1">
-    <div >
-        <!-- Z Axis Control Panel -->
+<div ng-controller="MyCtrl1" id="control-panel">
+    <div id="image-control">
+        <!-- Image Panel -->
+        <div>
+            <img class="last-update" alt="from URL blob" src="img/current-init.png" ng-src="{{ currentImageBlob }}" >
+            <div>
+                <button type="button" class="btn" ng-click="getCurrentPNGFromDrone()">Update</button>
+                <button type="button" class="btn" ng-click="save()">Save</button>
+                <button type="button" class="btn" ng-click="clear()">Clear</button>
+            </div>
+            <div class="saved-images">
+                <a ng-click="setImageAsMain()"><img ng-src="{{ savedImage }}" ng-show="savedImage" /></a>
+            </div>
+            <div class="video">
+                <button type="button" class="btn wide-button" ng-click="getVideoStream()">Show video stream</button>
+                <div id="droneStream">&nbsp;</div>
+            </div>
+        </div>
     </div>
-    <div>
-        <!-- Video Panel -->
+    <div id="cockpit">
+        <div id="slider-control">
+            <!-- Z Axis Control Panel -->
+            <input type="range" min="0" max="200"
+                   ng-model="verticalSpeed" ng-change="verticalChange()"
+                   class="slider-control vertical"/>
+            <input type="range" min="0" max="200"
+                   ng-model="horizontalSpeed" ng-change="horizontalChange()"
+                    class="slider-control"/>
+        </div>
+        <div>
+            <!-- Video Panel -->
+        </div>
+        <div id="axis-control">
+            <!-- X/Y Axis Control Panel -->
+            <input type="button" class="btn" id="btnLeft" value="Left" ng-mousedown="leftMouseDown()" ng-mouseup="stop()"/>
+            <input type="button" class="btn" id="btnRight" value="Right" ng-mousedown="rightMouseDown()" ng-mouseup="stop()"/>
+            <input type="button" class="btn" id="btnForward" value="Forward" ng-mousedown="forwardMouseDown()" ng-mouseup="stop()"/>
+            <input type="button" class="btn" id="btnBackward" value="Backward" ng-mousedown="backwardMouseDown()" ng-mouseup="stop()"/>
+            <basic-commands-bar on-take-off-click="takeOff()" on-land-click="land()" on-stop-click="stop()"/>
+        </div>
+        <div id="special-command">
+            <select ng-model="selectedMovement" ng-options="movement.name for movement in movements">
+            </select>
+            <input type="button" class="btn" value="Do it!" ng-click="doMovement()"/>
+        </div>
     </div>
-    <div class="btn-group">
-        <label class="btn btn-success" ng-model="radioModel" ng-click="takeOff()"  uncheckable>Take off</label>
-        <label class="btn btn-danger" ng-model="radioModel" ng-click="stop()" uncheckable>Stop</label>
-        <label class="btn btn-success" ng-model="radioModel" ng-click="land()" uncheckable>Land</label>
-    </div>
-    <div>
-        <!-- X/Y Axis Control Panel -->
-    </div>
-    <div>
+    <div id="console">
         <!-- Protocol Panel -->
         <ul id="protocol-listing">
-            <li ng-repeat="protocolEntry in commandProtocol">
-                <pre>{{protocolEntry.entry || 'null'}}</pre>
+            <li ng-repeat="protocolEntry in getCommands()">
+                <pre>{{protocolEntry.date | date : 'HH:mm:ss'}} - {{ protocolEntry.entry || 'null'}}</pre>
             </li>
-         </ul>
+        </ul>
     </div>
 </div>

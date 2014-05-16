@@ -27,15 +27,18 @@
   "scripts": {
     "test": "grunt nodeunit",
     "start": "cd simulator && beefy world.js 8888 -- -d -r ar-drone-browserified:ar-drone"
-},
+  },
   "dependencies": {
-      "ar-drone-browserified": "~0.0.5",
-      "voxel-camera": "~0.1.1",
-      "tic": "~0.2.1",
-      "ar-drone": "~0.2.1",
-      "voxel-drone": "https://github.com/shama/voxel-drone/tarball/master",
-      "express": "4.2.0",
-      "requirejs": "2.1.11"
+    "ar-drone": "~0.2.1",
+    "ar-drone-browserified": "~0.0.5",
+    "ardrone-autonomy": "^0.1.2",
+    "broadway": "^0.2.9",
+    "express": "4.2.0",
+    "requirejs": "2.1.11",
+    "tic": "~0.2.1",
+    "voxel-camera": "~0.1.1",
+    "voxel-drone": "https://github.com/shama/voxel-drone/tarball/master",
+    "dronestream": "^1.1.1"
   },
   "devDependencies": {
     "grunt-contrib-jshint": "~0.6.4",

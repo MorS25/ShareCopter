@@ -2,12 +2,6 @@
 module.exports = {
     takeOff : function(){},
     land: function(){},
-
-    /*
-        direction: ['left', 'right']
-        speed: [0..1]
-     */
-    turnAround: function(direction, speed){},
     up: function(speed, duration){},
     down: function(speed, duration){},
     front: function(speed, duration){},
@@ -15,8 +9,16 @@ module.exports = {
     left: function(speed, duration){},
     right: function(speed, duration){},
     stop: function(){},
+    crane: function(){},
+    square: function(){},
 
-    /* animation:
+    /*
+     direction: ['left', 'right']
+     speed: [0..1]
+     */
+    turnAround: function(direction, speed) { },
+    /*
+     animation:
          ['phiM30Deg', 'phi30Deg', 'thetaM30Deg', 'theta30Deg', 'theta20degYaw200deg',
          'theta20degYawM200deg', 'turnaround', 'turnaroundGodown', 'yawShake',
          'yawDance', 'phiDance', 'thetaDance', 'vzDance', 'wave', 'phiThetaMixed',
@@ -24,5 +26,7 @@ module.exports = {
 
      duration: milliseconds
      */
-    animate: function(animation, duration){}
+    animate: function(animation, duration){},
+    altitude: function(height) {},
+    getClient : function(){}
 };

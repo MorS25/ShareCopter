@@ -37,7 +37,8 @@ CopterApplication.CommandValidator.prototype = {
     validateDuration: function (req, res) {
         var duration = req.params.duration;
         if (isNaN(duration) || duration <= 0) {
-            duration = 1000;
+            res.statusCode = 400;
+            return res.send("Error 400: duration should be greater than 0");
         }
         return duration;
     },
@@ -48,6 +49,22 @@ CopterApplication.CommandValidator.prototype = {
             return res.send("Error 400: speed should be between 0 and 1");
         }
         return speed;
+    },
+    validateAngle: function (req, res) {
+        var angle = req.params.angle;
+        if (isNaN(angle) || angle <= 0 || angle > 360) {
+            res.statusCode = 400;
+            return res.send("Error 400: angle should be between 1 and 360");
+        }
+        return angle;
+    },
+    validateAltitude: function (req, res) {
+        var altitude = req.params.altitude;
+        if (isNaN(altitude) || altitude < 0.2 || altitude > 1.8) {
+            res.statusCode = 400;
+            return res.send("Error 400: altitude should be between 0.2 and 1.8");
+        }
+        return altitude;
     }
 };
 
