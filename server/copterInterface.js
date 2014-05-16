@@ -14,11 +14,9 @@ module.exports = {
 
     /*
      direction: ['left', 'right']
-     angle: [0..360]
-     altitude: [0.2..1.8]
+     speed: [0..1]
      */
-    turn: function(direction, angle, altitude){},
-
+    turnAround: function(direction, speed) { },
     /*
      animation:
          ['phiM30Deg', 'phi30Deg', 'thetaM30Deg', 'theta30Deg', 'theta20degYaw200deg',

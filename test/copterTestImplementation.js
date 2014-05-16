@@ -50,9 +50,9 @@ CopterApplication.NodeCopter.prototype = {
     square: function(){
         console.log("square");
     },
-    turn : function(direction, angle, altitude){
-        console.log("turn " + direction + ", " + angle + ", " + altitude);
-        this.turnCalledWith = {direction: direction, angle: angle, altitude: altitude};
+    turnAround : function(direction, speed){
+        console.log("turn " + direction + ", speed: " + speed);
+        this.turnCalledWith = {direction: direction, speed: speed};
     },
     animate: function(animation, duration) {
         console.log("animate " + animation + ", " + duration + " ms");
