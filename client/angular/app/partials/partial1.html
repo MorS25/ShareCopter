@@ -9,7 +9,7 @@
                 <button type="button" class="btn" ng-click="clear()">Clear</button>
             </div>
             <div class="saved-images">
-                <a ng-click="setImageAsMain()"><img ng-src="{{ savedImage }}" /></a>
+                <a ng-click="setImageAsMain()"><img ng-src="{{ savedImage }}" ng-show="savedImage" /></a>
             </div>
             <div class="video">
                 <button type="button" class="btn wide-button" ng-click="getVideoStream()">Show video stream</button>

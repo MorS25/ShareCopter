@@ -115,7 +115,7 @@ angular.module('myApp.controllers', [])
         $scope.clear = function() {
             LocalStorageService.clearAll();
             $scope.currentImageBlob = 'img/current-init.png';
-            $scope.$apply();
+            $scope.savedImage = "";
             LogService.informUser('Local storage cleared');
         }
 
