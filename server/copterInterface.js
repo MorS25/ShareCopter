@@ -27,5 +27,6 @@ module.exports = {
      duration: milliseconds
      */
     animate: function(animation, duration){},
-    altitude: function(height) {}
+    altitude: function(height) {},
+    getClient : function(){}
 };

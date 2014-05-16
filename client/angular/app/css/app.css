@@ -67,7 +67,7 @@
     position: fixed;
     top: 0;
     right: 310px;
-    width: 640px;
+    width: 310px;
     height: 100%;
     background-color: #f5f5f5;
     border-left: 1px solid #353535;
@@ -94,42 +94,42 @@ input[type=range].vertical
 
 #axis-control {
     width: 300px;
-    height: 100px !important;
+    height: 130px !important;
     position: relative;
 }
 
 #btnForward {
     position: absolute;
     top: 0px;
-    left: 120px;
+    left: 210px;
 }
 
 #btnLeft {
     position: absolute;
-    top: 32px;
+    top: 40px;
     left: 0px;
 }
 
 #btnRight {
     position: absolute;
-    top: 32px;
-    left: 270px;
+    top: 40px;
+    left: 420px;
 }
 
 #btnBackward {
     position: absolute;
-    left: 115px;
-    top: 70px;
+    left: 210px;
+    top: 80px;
 }
 
 .btn-group {
     position: absolute;
-    left: 50px;
-    top: 30px;
+    left: 110px;
+    top: 40px;
 }
 
 .btn {
-     width: 70px;
+    width: 100px;
  }
 
 .wide-button {

@@ -1,3 +1,4 @@
+var http    = require('http');
 var express = require('express');
 var app = express();
 var CopterFactory = require('../server/copterFactory');
@@ -102,6 +103,49 @@ var server = app.listen(3000, function() {
     console.log('Listening on port %d', server.address().port);
 });
 
+var client = copterInstance.getClient();
+
 // stream video from websocket ws://localhost:3000
 var droneStream = require("dronestream");
-droneStream.listen(server);
+
+// NOTE: need to give the existing video stream in the options, if there is one
+var videoStream = client.getVideoStream();
+var streamOptions = { tcpVideoStream: videoStream };
+droneStream.listen(server, streamOptions);
+
+// --- image server ---
+
+var pngStream = client.getPngStream();
+
+var lastPng;
+pngStream
+    .on('error', console.log)
+    .on('data', function(pngBuffer) {
+        lastPng = pngBuffer;
+    });
+
+var imageServer = http.createServer(function(req, res) {
+    if (!lastPng) {
+        res.writeHead(503, {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': 'X-Requested-With,Content-Type,Authorization',
+            'Access-Control-Allow-Methods': 'GET,PUT,PATCH,POST,DELETE'
+        });
+
+        res.end('Did not receive any png data yet.');
+        return;
+    }
+
+    res.writeHead(200, {
+        'Content-Type': 'image/png',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'X-Requested-With,Content-Type,Authorization',
+        'Access-Control-Allow-Methods': 'GET,PUT,PATCH,POST,DELETE'
+    });
+
+    res.end(lastPng);
+});
+
+imageServer.listen(8080, function() {
+    console.log('Serving latest png on port 8080 ...');
+});
