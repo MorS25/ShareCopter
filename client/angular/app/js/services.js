@@ -85,8 +85,8 @@ appServices.service('DroneService', ['$http', 'LogService', function ($http, Log
 }]);
 
 appServices.service('DroneImageService', ['$http', 'LogService', function ($http, LogService) {
-    //var imageBaseAddress = "http://localhost:8080/";
-    var imageBaseAddress = "http://localhost:8000/app/img/test-drone.png"; //test URL
+    var imageBaseAddress = "http://localhost:8080/";
+    //var imageBaseAddress = "http://localhost:8000/app/img/test-drone.png"; //test URL
 
     this.getNewImage = function (controllerCallback) {
             var xhr = new XMLHttpRequest();

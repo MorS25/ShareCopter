@@ -14,9 +14,12 @@ CopterApplication.NodeCopter = function(){
 
     this.prototype = Object.create(copterInterface);
     this.client = ardrone.createClient();
-
     this.isInitialized = false;
     this.isRunning = false;
+
+    this.getClient = function(){
+        return this.client;
+    };
 
     this.init = function() {
 
