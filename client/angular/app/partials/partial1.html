@@ -8,14 +8,9 @@
                 <button type="button" class="btn">Save</button>
                 <button type="button" class="btn">Clear</button>
             </div>
-            <div>
-                TODO
-            </div>
-        </div>
-        <div class="video">
-            <button type="button" class="btn" ng-click="getVideoStream()">Show video stream</button>
-            <div id="droneStream" style="width: 640px; height: 360px">
-                <video src="192.168.1.1:5555" autoplay="true"/>
+            <div class="video">
+                <button type="button" class="btn wide-button" ng-click="getVideoStream()">Show video stream</button>
+                <div id="droneStream">&nbsp;</div>
             </div>
         </div>
     </div>
@@ -24,7 +19,7 @@
             <!-- Z Axis Control Panel -->
             <input type="range" min="0" max="200"
                    ng-model="verticalSpeed" ng-change="verticalChange()"
-                   class="vertical slider-control"/>
+                   class="slider-control vertical"/>
             <input type="range" min="0" max="200"
                    ng-model="horizontalSpeed" ng-change="horizontalChange()"
                     class="slider-control"/>
@@ -38,11 +33,7 @@
             <input type="button" class="btn" id="btnRight" value="Right" ng-mousedown="rightMouseDown()" ng-mouseup="stop()"/>
             <input type="button" class="btn" id="btnForward" value="Forward" ng-mousedown="forwardMouseDown()" ng-mouseup="stop()"/>
             <input type="button" class="btn" id="btnBackward" value="Backward" ng-mousedown="backwardMouseDown()" ng-mouseup="stop()"/>
-            <div class="btn-group">
-                <label class="btn btn-success" ng-model="radioModel" btn-radio="'takeOff'" ng-click="takeOff()" uncheckable >Take off</label>
-                <label class="btn btn-danger"  ng-model="radioModel" btn-radio="'stop'" ng-click="stop()" uncheckable>Stop</label>
-                <label class="btn btn-success" ng-model="radioModel" btn-radio="'land'" ng-click="land()" uncheckable>Land</label>
-            </div>
+            <basic-commands-bar on-take-off-click="takeOff()" on-land-click="land()" on-stop-click="stop()"/>
         </div>
         <div id="special-command">
             <select ng-model="selectedMovement" ng-options="movement.name for movement in movements">
@@ -58,6 +49,4 @@
             </li>
         </ul>
     </div>
-
-
 </div>

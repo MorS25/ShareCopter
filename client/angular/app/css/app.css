@@ -46,6 +46,11 @@
     padding: 3px;
 }
 
+#cockpit{
+    float:left;
+    position: absolute;
+}
+
 #console {
     position: fixed;
     top: 0;
@@ -55,6 +60,7 @@
     background-color: #f5f5f5;
     border-left: 1px solid #353535;
     padding: 5px;
+    float:right;
 }
 
 #image-control {
@@ -80,15 +86,6 @@ input[type=range].vertical
     width: 8px;
     height: 300px;
     padding: 0 5px;
-}
-
-#cockpit{
-    float:left;
-    position: absolute;
-}
-
-#console {
-    float:right;
 }
 
 #axis-control {
@@ -129,4 +126,16 @@ input[type=range].vertical
 
 .btn {
     width: 100px;
+ }
+
+.wide-button {
+    width: 140px;
+}
+
+.video {
+    margin-top: 5px;
+}
+
+#droneStream > canvas {
+    width: 630px;
 }
