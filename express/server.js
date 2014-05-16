@@ -113,7 +113,7 @@ var videoStream = client.getVideoStream();
 var streamOptions = { tcpVideoStream: videoStream };
 droneStream.listen(server, streamOptions);
 
-// --- image server ---
+// --- image serving ---
 
 var pngStream = client.getPngStream();
 
@@ -124,7 +124,7 @@ pngStream
         lastPng = pngBuffer;
     });
 
-var imageServer = http.createServer(function(req, res) {
+app.get('/last_image', function(req, res){
     if (!lastPng) {
         res.writeHead(503, {
             'Access-Control-Allow-Origin': '*',
@@ -144,8 +144,4 @@ var imageServer = http.createServer(function(req, res) {
     });
 
     res.end(lastPng);
-});
-
-imageServer.listen(8080, function() {
-    console.log('Serving latest png on port 8080 ...');
 });
